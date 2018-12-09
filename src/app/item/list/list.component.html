@@ -1,0 +1,21 @@
+<!--<ngx-loading [show]="itemService.loading"></ngx-loading>-->
+<ion-header>
+    <ion-title>Pantry Items</ion-title>
+</ion-header>
+
+<ion-content padding>
+    <ion-row>
+        <ion-button color="primary" fill="outline" (click)="openNewItem()">
+            <ion-icon name="add"></ion-icon>
+            Create New Item
+        </ion-button>
+    </ion-row>
+    <ion-row>
+        <ion-list>
+            <ion-item (click)="itemListClick($event, item)" *ngFor="let item of items">
+                {{ item.name }}
+                <ion-icon name="eye"></ion-icon>
+            </ion-item>
+        </ion-list>
+    </ion-row>
+</ion-content>

@@ -1,0 +1,25 @@
+/* Custom adaptations for existing elements in (ng-)bootstrap. */
+//@import '/Users/uptownjimmy/Dropbox/uJ/Angular/uptownShopperV2/node_modules/bootstrap-css-only/scss/functions';
+
+//@each $color, $value in $theme-colors {
+//    .btn-outline-#{$color}.clicked:not(.active) {
+//        color: $value;
+//        background: transparent none;
+//    }
+//
+//    .btn-#{$color}.clicked:not(.active) {
+//        //color: color-yiq($value);
+//    @include gradient-bg($value);
+//        border-color: $value;
+//    }
+//}
+
+.btn {
+    cursor: pointer;
+    width: 100px;
+}
+
+input.ng-invalid.ng-touched, select.ng-invalid.ng-touched {
+    border: 1px solid red;
+}
+

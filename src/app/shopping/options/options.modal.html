@@ -1,0 +1,47 @@
+<div class="modal-content">
+    <!--<ngx-loading [show]="loading"></ngx-loading>-->
+    <div class="modal-header">
+        <h3 class="modal-title">{{ item.name }}</h3>
+        <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+                (click)="activeModal.close()">
+            <span>&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="container-fluid">
+            <div>
+                <div class="row">
+                    <div class="col">
+                        <button
+                                type="button"
+                                class="btn btn-outline-primary"
+                                (click)="showItemDetails()">
+                            <b>Show</b><br> Details
+                        </button>
+                    </div>
+                    <div class="col">
+                        <button
+                                type="button"
+                                class="btn btn-outline-danger"
+                                (click)="removeItemFromShoppingList()">
+                            <b>Remove</b><br> from List
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button
+                type="button"
+                class="btn btn-outline-secondary"
+                (click)="activeModal.close()">
+            Close
+        </button>
+    </div>
+</div>
+

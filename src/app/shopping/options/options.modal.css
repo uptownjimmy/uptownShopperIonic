@@ -1,0 +1,12 @@
+.btn {
+    cursor: pointer;
+    width: 100px;
+}
+
+.row {
+    display: flex; /* equal height of the children */
+}
+
+.col {
+    text-align: center;
+}

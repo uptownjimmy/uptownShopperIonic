@@ -1,0 +1,17 @@
+a.list-group-item:hover {
+    cursor: pointer;
+    width: 400px;
+}
+
+ul.list-group a {
+    height: 50px !important;
+    width: 300px;
+}
+
+.btn {
+    cursor: pointer;
+}
+
+/*div.container-fluid {*/
+    /*padding-top: 50px;*/
+/*}*/

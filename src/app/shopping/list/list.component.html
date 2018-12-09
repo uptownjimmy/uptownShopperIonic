@@ -1,0 +1,40 @@
+<!--<ngx-loading [show]="itemService.loading"></ngx-loading>-->
+<ion-header>
+    <ion-row>
+        <!--<div class="btn-group" ngbDropdown>-->
+            <!--<button-->
+                    <!--class="btn btn-outline-secondary"-->
+                    <!--id="filterByStoreDropdown"-->
+                    <!--ngbDropdownToggle>-->
+                <!--{{ selectedStore }}-->
+            <!--</button>-->
+            <!--<div-->
+                    <!--class="dropdown-menu"-->
+                    <!--aria-labelledby="filterByStoreDropdown"-->
+                    <!--ngbDropdownMenu>-->
+                <!--<button-->
+                        <!--class="dropdown-item"-->
+                        <!--*ngFor="let store of stores"-->
+                        <!--(click)="filterByStore(store.name)">-->
+                    <!--{{ store.name }}-->
+                <!--</button>-->
+            <!--</div>-->
+        <!--</div>-->
+        <ion-button color="primary" fill="outline" (click)="addOrRemoveItems()">
+            + / -
+        </ion-button>
+    </ion-row>
+</ion-header>
+
+<ion-content>
+    <ion-row>
+        <ion-list>
+            <ion-item class="list-group-item"
+            (click)="shoppingItemListClick($event, item)"
+            *ngFor="let item of filteredShoppingItems">
+                {{ item.name }}
+                <ion-icon name="arrow-down"></ion-icon>
+            </ion-item>
+        </ion-list>
+    </ion-row>
+</ion-content>

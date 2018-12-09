@@ -1,0 +1,21 @@
+a.list-group-item:hover {
+    cursor: pointer;
+}
+
+ul.list-group a {
+    height: 50px !important;
+    width: 250px;
+}
+
+.btn {
+    cursor: pointer;
+}
+
+.modal-body {
+    height: 600px !important;
+    overflow-y: auto;
+}
+
+.modal-dialog{
+    overflow-y: initial !important
+}
