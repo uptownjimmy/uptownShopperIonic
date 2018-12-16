@@ -1,107 +1,89 @@
-<div class="modal-content">
-    <!--<ngx-loading [show]="loading"></ngx-loading>-->
-    <form [formGroup]="itemDetailForm">
-        <div class="modal-header">
-            <h3 class="modal-title">{{ modalTitle }}</h3>
-            <button
-                    type="button"
-                    class="close"
-                    data-dismiss="modal"
-                    aria-label="Close"
-                    (click)="activeModal.close()">
+<!--<ngx-loading [show]="loading"></ngx-loading>-->
+<form [formGroup]="itemDetailForm">
+    <ion-header>
+        <ion-row>
+            <ion-title>{{ modalTitle }}</ion-title>
+        </ion-row>
+        <ion-row>
+            <ion-button
+                    color="primary"
+                    fill="outline"
+                    >
                 <span>&times;</span>
-            </button>
-        </div>
-        <div class="modal-body">
-
-            <div class="container-fluid">
-                <div class="p-2">
-
-                    <div class="form-group row">
-                        <label class="col-xs-12 col-sm-3" for="name">Name</label>
-                        <div class="col-xs-12 col-sm-9">
-                            <input class="form-control" id="name" formControlName="name"/>
-                            <span *ngIf="!itemDetailForm.get('name').valid && itemDetailForm.get('name').touched"
-                                  class="help-block">
-                                Please enter a name.
-                            </span>
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <label class="col-xs-12 col-sm-3" for="item_Type">Type</label>
-                        <div class="col-xs-12 col-sm-9">
-                            <select class="form-control" id="item_Type" formControlName="item_Type">
-                                <option [ngValue]="null">* select a type</option>
-                                <option
-                                        *ngFor="let item_Type of item_Types"
-                                        [ngValue]="item_Type.id">
-                                    {{item_Type.name}}
-                                </option>
-                            </select>
-                            <span *ngIf="!itemDetailForm.get('item_Type').valid && itemDetailForm.get('item_Type').touched"
-                                  class="help-block">
-                                Please enter a type.
-                            </span>
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <label class="col-xs-12 col-sm-3" for="notes">Notes</label>
-                        <div class="col-xs-12 col-sm-9">
-                        <textarea
-                                class="form-control"
-                                id="notes"
-                                formControlName="notes"
-                                rows="4">
-                        </textarea>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class='text-center'>
-                    <div class="btn-group btn-group-toggle">
-                        <label class="btn btn-outline-primary" ngbButtonLabel usNgbCheckboxButtonLabel>
-                            <input type="checkbox" formControlName="kroger" ngbButton>Kroger
-                        </label>
-                        <label class="btn btn-outline-primary" ngbButtonLabel usNgbCheckboxButtonLabel>
-                            <input type="checkbox" formControlName="traderJoe" ngbButton>TJ's
-                        </label>
-                        <label class="btn btn-outline-primary" ngbButtonLabel usNgbCheckboxButtonLabel>
-                            <input type="checkbox" formControlName="lowe" ngbButton>Lowe's
-                        </label>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-        <div class="modal-footer">
-            <button
-                    type="submit"
-                    class="btn btn-outline-success"
+            </ion-button>
+        </ion-row>
+    </ion-header>
+    <ion-content>
+        <ion-row>
+            <label for="name">Name</label>
+            <input id="name" formControlName="name"/>
+            <span *ngIf="!itemDetailForm.get('name').valid && itemDetailForm.get('name').touched">
+                    Please enter a name.
+                </span>
+        </ion-row>
+        <ion-row>
+            <label for="item_Type">Type</label>
+            <select id="item_Type" formControlName="item_Type">
+                <option [ngValue]="null">* select a type</option>
+                <option
+                        *ngFor="let item_Type of item_Types"
+                        [ngValue]="item_Type.id">
+                    {{item_Type.name}}
+                </option>
+            </select>
+            <span *ngIf="!itemDetailForm.get('item_Type').valid && itemDetailForm.get('item_Type').touched">
+                    Please enter a type.
+                </span>
+        </ion-row>
+        <ion-row>
+            <label for="notes">Notes</label>
+            <textarea
+                    id="notes"
+                    formControlName="notes"
+                    rows="4">
+                </textarea>
+        </ion-row>
+        <!--<ion-row>-->
+        <!--<div class='text-center'>-->
+        <!--<label ngbButtonLabel usNgbCheckboxButtonLabel>-->
+        <!--<input type="checkbox" formControlName="kroger" ngbButton>Kroger-->
+        <!--</label>-->
+        <!--<label ngbButtonLabel usNgbCheckboxButtonLabel>-->
+        <!--<input type="checkbox" formControlName="traderJoe" ngbButton>TJ's-->
+        <!--</label>-->
+        <!--<label ngbButtonLabel usNgbCheckboxButtonLabel>-->
+        <!--<input type="checkbox" formControlName="lowe" ngbButton>Lowe's-->
+        <!--</label>-->
+        <!--</div>-->
+        <!--</ion-row>-->
+    </ion-content>
+    <ion-footer>
+        <ion-toolbar>
+            <ion-button
+                    color="primary"
+                    fill="outline"
                     (click)="formSubmit()"
                     [disabled]="!itemDetailForm.valid">
                 Save
-            </button>
+            </ion-button>
             <!--<button-->
-                    <!--class="btn btn-outline-danger"-->
-                    <!--mwlConfirmationPopover-->
-                    <!--[popoverTitle]="popoverTitle"-->
-                    <!--[popoverMessage]="popoverMessage"-->
-                    <!--placement="bottom"-->
-                    <!--(confirm)="confirmClicked = true; deleteItem()"-->
-                    <!--(cancel)="cancelClicked = true"-->
-                    <!--*ngIf="!isNew">-->
-                <!--Delete-->
+            <!--class="btn btn-outline-danger"-->
+            <!--mwlConfirmationPopover-->
+            <!--[popoverTitle]="popoverTitle"-->
+            <!--[popoverMessage]="popoverMessage"-->
+            <!--placement="bottom"-->
+            <!--(confirm)="confirmClicked = true; deleteItem()"-->
+            <!--(cancel)="cancelClicked = true"-->
+            <!--*ngIf="!isNew">-->
+            <!--Delete-->
             <!--</button>-->
-            <button
-                    type="button"
-                    class="btn btn-outline-secondary"
+            <ion-button
+                    color="balanced"
+                    fill="outline"
                     (click)="activeModal.close()">
                 Close
-            </button>
-        </div>
-    </form>
-</div>
+            </ion-button>
+        </ion-toolbar>
+    </ion-footer>
+</form>
 

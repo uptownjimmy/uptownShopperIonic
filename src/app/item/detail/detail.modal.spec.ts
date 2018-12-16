@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DetailModal } from './detail.modal';
+import { ItemDetailModal } from './detail.modal';
 
 describe('OptionsModal', () => {
-  let component: DetailModal;
-  let fixture: ComponentFixture<DetailModal>;
+  let component: ItemDetailModal;
+  let fixture: ComponentFixture<ItemDetailModal>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DetailModal ]
+      declarations: [ ItemDetailModal ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DetailModal);
+    fixture = TestBed.createComponent(ItemDetailModal);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

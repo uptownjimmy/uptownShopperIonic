@@ -1,21 +1,18 @@
 import {Component, OnInit, Input, Inject, AfterViewInit} from '@angular/core';
-// import {NgbActiveModal, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {Item} from '../../item/item.model';
 // import {ItemDetailComponent} from '../../item/item-detail/item-detail.component';
 
 @Component({
     selector: 'us-shopping-item-options',
-    templateUrl: './options.modal.html',
-    styleUrls: ['./options.modal.css']
+    templateUrl: './options.popover.html',
+    styleUrls: ['./options.popover.css']
 })
-export class ShoppingItemOptionsModal implements OnInit {
+export class ShoppingItemOptionsPopover implements OnInit {
     @Input() item: Item;
     public loading = true;
 
     constructor(
-        // public activeModal: NgbActiveModal,
         @Inject('itemService') private itemService,
-        // private modalService: NgbModal
     ) {}
 
     ngOnInit() {
@@ -34,7 +31,7 @@ export class ShoppingItemOptionsModal implements OnInit {
         this.loading = false;
     }
 
-    // private showItemDetails() {
+    private showItemDetails() {
     //     this.activeModal.close();
     //     setTimeout(() => {
     //         const modalRef = this.modalService.open(ItemDetailComponent);
@@ -48,5 +45,5 @@ export class ShoppingItemOptionsModal implements OnInit {
     //             console.log(error);
     //         });
     //     });
-    // }
+    }
 }

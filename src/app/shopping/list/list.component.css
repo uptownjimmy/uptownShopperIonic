@@ -1,22 +1,5 @@
-ul {
-    list-style: none;
-}
-
-.btn, a.list-group-item:hover, div[ngbDropdown] {
-    cursor: pointer;
-}
-
-ul.list-group a {
-    height: 50px !important;
-    width: 300px;
-}
-
-i.fa-caret-down {
-    margin-top: 6px;
-}
-
-#button-group {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+/*#button-group {*/
+    /*display: flex;*/
+    /*justify-content: center;*/
+    /*align-items: center;*/
+/*}*/

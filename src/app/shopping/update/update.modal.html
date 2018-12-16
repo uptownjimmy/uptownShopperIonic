@@ -1,46 +1,41 @@
-<div class="modal-content">
-    <div class="modal-header">
-        <h5 class="modal-title">Add/Remove Shopping Items</h5>
-        <button
-                type="button"
-                class="close"
-                data-dismiss="modal"
-                aria-label="Close"
-                (click)="activeModal.close()">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-    <div class="modal-body">
-        <div class="container-fluid">
-            <form action="">
-                <div class="row">
-                    <div class="col-xs-12 mx-auto">
-                        <button
-                                type="submit"
-                                class="btn btn-outline-primary"
-                                (click)="addToShoppingList()">
-                            Done
-                        </button>
-                    </div>
-                </div>
-                <hr>
-                <div class="row">
-                    <div class="col-xs-12 mx-auto">
-                        <ul class="list-group">
-                            <li class="list-group-item" *ngFor="let item of items">
-                                <label class="custom-control custom-checkbox ml-2">
-                                    <input
-                                        class="custom-control-input"
-                                        type="checkbox"
-                                        [checked]="item.active"
-                                        (change)="item.active = !item.active; onItemListClick(item)">
-                                    <span class="custom-control-label">{{ item.name }}</span>
-                                </label>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
+<ion-header>
+    <ion-row>
+        <ion-title>Add/Remove Shopping Items</ion-title>
+    <!--</ion-row>-->
+    <!--<ion-row>-->
+        <ion-button
+                color="primary"
+                fill="outline"
+                >
+            <span>&times;</span>
+        </ion-button>
+    </ion-row>
+</ion-header>
+<ion-content>
+    <form action="">
+        <ion-row>
+            <button
+                    type="submit"
+                    color="balanced"
+                    fill="outline"
+                    (click)="addToShoppingList()">
+                Done
+            </button>
+        </ion-row>
+        <hr>
+        <ion-row>
+            <ion-list>
+                <ion-item *ngFor="let item of items">
+                    <label>
+                        <input
+                                type="checkbox"
+                                [checked]="item.active"
+                                (change)="item.active = !item.active; onItemListClick(item)">
+                        <span>{{ item.name }}</span>
+                    </label>
+                </ion-item>
+            </ion-list>
+        </ion-row>
+    </form>
+
+</ion-content>

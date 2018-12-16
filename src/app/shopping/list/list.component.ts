@@ -1,9 +1,10 @@
-import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
-import {Item} from '../../item/item.model';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { Item} from '../../item/item.model';
 // import {AddItemsComponent} from '../add-shopping-items/add-shopping-items.component';
-import {Subscription} from 'rxjs';
-// import {OptionsModal} from '../shopping-item-options/shopping-item-options.component';
-import {Store} from '../../store/store.model';
+import { Subscription } from 'rxjs';
+import { PopoverController } from '@ionic/angular';
+import { ShoppingItemOptionsPopover } from '../options/options.popover';
+import { Store } from '../../store/store.model';
 
 @Component({
     selector: 'us-shopping-list',
@@ -33,10 +34,10 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
     public selectedStore = 'Filter by Store';
 
     constructor(
+		public popoverController : PopoverController,
         @Inject('itemService') public itemService,
 		@Inject('shoppingService') public shoppingService,
 		@Inject('storeService') public storeService,
-
 		// private modalService: NgbModal,
     ) {
         this.itemService.getItems();
@@ -79,18 +80,21 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
     //     });
     // }
 
-    // private shoppingItemListClick($event, item) {
-    //     setTimeout(() => {
-    //         const modalRef = this.modalService.open(OptionsModal);
-    //         modalRef.componentInstance.item = item;
-	//
-    //         modalRef.result.then((result) => {
-    //             console.log(result);
-    //         }).catch((error) => {
-    //             console.log(error);
-    //         });
-    //     });
-    // }
+	async openItemOptionsPopover(event, item) {
+		const popover = await this.popoverController.create({
+			component: ShoppingItemOptionsPopover,
+			componentProps: { item: item },
+			event: event,
+		});
+
+		return await popover.present();
+
+		// const modal = await this.modalController.create({
+		// 	component: ShoppingItemOptionsModal,
+		// 	componentProps: { item: item }
+		// });
+		// return await modal.present();
+	}
 
     private filterByStore(storeName) {
         this.selectedStore = storeName;

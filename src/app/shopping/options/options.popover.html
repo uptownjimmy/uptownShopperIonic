@@ -1,0 +1,36 @@
+<ion-content>
+    <ion-row>
+        <ion-col text-center>
+            <h5>{{ item.name }}</h5>
+        </ion-col>
+    </ion-row>
+    <ion-row>
+        <ion-col text-center>
+            <ion-button
+                    color="danger"
+                    fill="outline"
+                    (click)="removeItemFromShoppingList()">
+                <b>Remove from List</b>
+            </ion-button>
+        </ion-col>
+    </ion-row>
+    <ion-row>
+        <ion-col text-center>
+            <ion-button
+                    color="primary"
+                    fill="outline"
+                    (click)="showItemDetails()">
+                <b>Show Details</b>
+            </ion-button>
+        </ion-col>
+    </ion-row>
+    <ion-row>
+        <ion-col text-center>
+            <ion-button
+                    color="medium"
+                    fill="outline">
+                Close
+            </ion-button>
+        </ion-col>
+    </ion-row>
+</ion-content>

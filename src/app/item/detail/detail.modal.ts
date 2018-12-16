@@ -1,6 +1,5 @@
 import {Component, OnInit, Input, Renderer2, Inject, AfterViewInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-// import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {Item} from '../item.model';
 
 @Component({
@@ -36,7 +35,6 @@ export class ItemDetailModal implements OnInit, AfterViewInit {
     public cancelClicked = false;
 
     constructor(
-        // public activeModal: NgbActiveModal,
         @Inject('itemService') private itemService,
         private renderer: Renderer2
     ) {}
@@ -79,13 +77,11 @@ export class ItemDetailModal implements OnInit, AfterViewInit {
             this.item.name = this.itemDetailForm.value.name;
             this.item.item_Type = this.itemDetailForm.value.item_Type;
             this.item.notes = this.itemDetailForm.value.notes;
-            // this.item.modified_By = 'JMJIII';
             this.itemService.updateExistingItem(this.item);
         } else {
             this.itemService.createNewItem(this.itemDetailForm.value);
         }
 
-        // this.activeModal.close();
         this.loading = false;
     }
 
@@ -95,7 +91,6 @@ export class ItemDetailModal implements OnInit, AfterViewInit {
         if (this.item) {
             this.itemService.deleteItem(this.item);
         }
-        // this.activeModal.close();
         this.loading = false;
     }
 }
