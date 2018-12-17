@@ -1,7 +1,7 @@
 <ion-content>
     <ion-row>
         <ion-col text-center>
-            <h5>{{ item.name }}</h5>
+            <h4>{{ item.name }}</h4>
         </ion-col>
     </ion-row>
     <ion-row>
@@ -28,7 +28,8 @@
         <ion-col text-center>
             <ion-button
                     color="medium"
-                    fill="outline">
+                    fill="outline"
+                    (click)="closePopover()">
                 Close
             </ion-button>
         </ion-col>

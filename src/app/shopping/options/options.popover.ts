@@ -1,4 +1,6 @@
 import {Component, OnInit, Input, Inject, AfterViewInit} from '@angular/core';
+import { PopoverController } from '@ionic/angular';
+
 import {Item} from '../../item/item.model';
 // import {ItemDetailComponent} from '../../item/item-detail/item-detail.component';
 
@@ -13,6 +15,7 @@ export class ShoppingItemOptionsPopover implements OnInit {
 
     constructor(
         @Inject('itemService') private itemService,
+		public popoverController: PopoverController
     ) {}
 
     ngOnInit() {
@@ -27,13 +30,16 @@ export class ShoppingItemOptionsPopover implements OnInit {
             this.item.active = false;
             this.itemService.updateExistingItem(this.item);
         }
-        // this.activeModal.close();
-        this.loading = false;
+
+		// noinspection JSIgnoredPromiseFromCall
+		this.popoverController.dismiss();
+		this.loading = false;
     }
 
     private showItemDetails() {
-    //     this.activeModal.close();
-    //     setTimeout(() => {
+		this.popoverController.dismiss();
+
+		//     setTimeout(() => {
     //         const modalRef = this.modalService.open(ItemDetailComponent);
     //         modalRef.componentInstance.isNew = false;
     //         modalRef.componentInstance.modalTitle = 'Edit Item';
@@ -45,5 +51,9 @@ export class ShoppingItemOptionsPopover implements OnInit {
     //             console.log(error);
     //         });
     //     });
-    }
+	}
+
+	private closePopover() {
+		this.popoverController.dismiss();
+	}
 }

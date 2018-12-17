@@ -38,7 +38,6 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
         @Inject('itemService') public itemService,
 		@Inject('shoppingService') public shoppingService,
 		@Inject('storeService') public storeService,
-		// private modalService: NgbModal,
     ) {
         this.itemService.getItems();
         this.subscription = this.itemService.itemListChanged.subscribe(
@@ -88,12 +87,6 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
 		});
 
 		return await popover.present();
-
-		// const modal = await this.modalController.create({
-		// 	component: ShoppingItemOptionsModal,
-		// 	componentProps: { item: item }
-		// });
-		// return await modal.present();
 	}
 
     private filterByStore(storeName) {
