@@ -19,7 +19,14 @@
     width: 100px;
 }
 
-input.ng-invalid.ng-touched, select.ng-invalid.ng-touched {
-    border: 1px solid red;
+span.invalid {
+  color: red;
+}
+
+ion-label {
+  //text-decoration: underline;
+  font-weight: bold;
+  font-style: italic;
+  color: gray !important;
 }
 

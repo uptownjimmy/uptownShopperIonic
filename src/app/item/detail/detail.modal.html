@@ -1,67 +1,77 @@
 <!--<ngx-loading [show]="loading"></ngx-loading>-->
-<form [formGroup]="itemDetailForm">
-    <ion-header>
-        <ion-row>
-            <ion-title>{{ modalTitle }}</ion-title>
-        </ion-row>
-        <ion-row>
-            <ion-button
-                    color="primary"
-                    fill="outline"
-                    >
-                <span>&times;</span>
-            </ion-button>
-        </ion-row>
-    </ion-header>
-    <ion-content>
-        <ion-row>
-            <label for="name">Name</label>
-            <input id="name" formControlName="name"/>
-            <span *ngIf="!itemDetailForm.get('name').valid && itemDetailForm.get('name').touched">
-                    Please enter a name.
-                </span>
-        </ion-row>
-        <ion-row>
-            <label for="item_Type">Type</label>
-            <select id="item_Type" formControlName="item_Type">
-                <option [ngValue]="null">* select a type</option>
-                <option
-                        *ngFor="let item_Type of item_Types"
-                        [ngValue]="item_Type.id">
-                    {{item_Type.name}}
-                </option>
-            </select>
-            <span *ngIf="!itemDetailForm.get('item_Type').valid && itemDetailForm.get('item_Type').touched">
-                    Please enter a type.
-                </span>
-        </ion-row>
-        <ion-row>
-            <label for="notes">Notes</label>
-            <textarea
+<!--<ion-header>-->
+<!--<ion-row>-->
+<!--<ion-title>{{ modalTitle }}</ion-title>-->
+<!--</ion-row>-->
+<!--<ion-row>-->
+<!--<ion-button-->
+<!--color="primary"-->
+<!--fill="outline"-->
+<!--&gt;-->
+<!--<span>&times;</span>-->
+<!--</ion-button>-->
+<!--</ion-row>-->
+<!--</ion-header>-->
+<ion-content>
+    <form [formGroup]="itemDetailForm">
+        <ion-item>
+            <ion-label position="floating">Name</ion-label>
+            <ion-input id="name" formControlName="name"></ion-input>
+            <span
+                class="invalid"
+                *ngIf="!itemDetailForm.get('name').valid && itemDetailForm.get('name').touched">
+                Please enter a name.
+            </span>
+        </ion-item>
+
+        <ion-item>
+            <ion-label position="floating">Type</ion-label>
+            <ion-select
+                    id="item_Type"
+                    formControlName="item_Type"
+                    placeholder="Select One">
+                <ion-select-option
+                    *ngFor="let item_Type of item_Types"
+                    [value]="item_Type.id">{{item_Type.name}}
+                </ion-select-option>
+            </ion-select>
+            <span
+                class="invalid"
+                *ngIf="!itemDetailForm.get('item_Type').valid && itemDetailForm.get('item_Type').touched">
+                Please enter a type.
+            </span>
+        </ion-item>
+        <ion-item>
+            <ion-label position="floating">Notes</ion-label>
+            <ion-textarea
                     id="notes"
                     formControlName="notes"
                     rows="4">
-                </textarea>
-        </ion-row>
-        <!--<ion-row>-->
-        <!--<div class='text-center'>-->
-        <!--<label ngbButtonLabel usNgbCheckboxButtonLabel>-->
-        <!--<input type="checkbox" formControlName="kroger" ngbButton>Kroger-->
-        <!--</label>-->
-        <!--<label ngbButtonLabel usNgbCheckboxButtonLabel>-->
-        <!--<input type="checkbox" formControlName="traderJoe" ngbButton>TJ's-->
-        <!--</label>-->
-        <!--<label ngbButtonLabel usNgbCheckboxButtonLabel>-->
-        <!--<input type="checkbox" formControlName="lowe" ngbButton>Lowe's-->
-        <!--</label>-->
-        <!--</div>-->
-        <!--</ion-row>-->
-    </ion-content>
-    <ion-footer>
-        <ion-toolbar>
+            </ion-textarea>
+        </ion-item>
+    </form>
+
+    <ion-row>
+    <div class='text-center'>
+    <label ngbButtonLabel usNgbCheckboxButtonLabel>
+    <input type="checkbox" formControlName="kroger" ngbButton>Kroger
+    </label>
+    <label ngbButtonLabel usNgbCheckboxButtonLabel>
+    <input type="checkbox" formControlName="traderJoe" ngbButton>TJ's
+    </label>
+    <label ngbButtonLabel usNgbCheckboxButtonLabel>
+    <input type="checkbox" formControlName="lowe" ngbButton>Lowe's
+    </label>
+    </div>
+    </ion-row>
+</ion-content>
+<ion-footer>
+    <ion-toolbar>
+        <ion-title>
             <ion-button
-                    color="primary"
+                    color="success"
                     fill="outline"
+                    size="small"
                     (click)="formSubmit()"
                     [disabled]="!itemDetailForm.valid">
                 Save
@@ -78,12 +88,12 @@
             <!--Delete-->
             <!--</button>-->
             <ion-button
-                    color="balanced"
+                    color="medium"
                     fill="outline"
-                    (click)="activeModal.close()">
+                    size="small"
+                    (click)="closeModal()">
                 Close
             </ion-button>
-        </ion-toolbar>
-    </ion-footer>
-</form>
-
+        </ion-title>
+    </ion-toolbar>
+</ion-footer>

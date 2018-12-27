@@ -1,8 +1,8 @@
-import {Component, OnInit, Input, Inject, AfterViewInit} from '@angular/core';
-import { PopoverController } from '@ionic/angular';
+import { Component, OnInit, Input, Inject } from '@angular/core';
+import { ModalController, PopoverController } from '@ionic/angular';
 
-import {Item} from '../../item/item.model';
-// import {ItemDetailComponent} from '../../item/item-detail/item-detail.component';
+import { Item } from '../../item/item.model';
+import { ItemDetailModal } from '../../item/detail/detail.modal';
 
 @Component({
     selector: 'us-shopping-item-options',
@@ -11,11 +11,12 @@ import {Item} from '../../item/item.model';
 })
 export class ShoppingItemOptionsPopover implements OnInit {
     @Input() item: Item;
-    public loading = true;
+	private loading = true;
 
     constructor(
         @Inject('itemService') private itemService,
-		public popoverController: PopoverController
+		public popoverController: PopoverController,
+		public modalController: ModalController
     ) {}
 
     ngOnInit() {
@@ -24,6 +25,7 @@ export class ShoppingItemOptionsPopover implements OnInit {
 
     private removeItemFromShoppingList() {
         console.log('Removing item from shopping list # ' + JSON.stringify(this.item));
+
         this.loading = true;
 
         if (this.item) {
@@ -31,13 +33,23 @@ export class ShoppingItemOptionsPopover implements OnInit {
             this.itemService.updateExistingItem(this.item);
         }
 
-		// noinspection JSIgnoredPromiseFromCall
 		this.popoverController.dismiss();
 		this.loading = false;
     }
 
-    private showItemDetails() {
+    private async showItemDetails() {
 		this.popoverController.dismiss();
+
+		const modal = await this.modalController.create({
+			component: ItemDetailModal,
+			// showBackdrop: true,
+			componentProps: {
+				isNew: false,
+				modalTitle:  'Edit Item',
+				item: this.item
+			}
+		});
+		return await modal.present();
 
 		//     setTimeout(() => {
     //         const modalRef = this.modalService.open(ItemDetailComponent);

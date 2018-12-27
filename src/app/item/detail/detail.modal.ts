@@ -1,5 +1,7 @@
 import {Component, OnInit, Input, Renderer2, Inject, AfterViewInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
+import { ModalController } from '@ionic/angular';
+
 import {Item} from '../item.model';
 
 @Component({
@@ -29,15 +31,16 @@ export class ItemDetailModal implements OnInit, AfterViewInit {
     ];
     public loading = false;
     public itemDetailForm;
-    public popoverTitle = 'Delete Confirmation';
-    public popoverMessage = 'Are you sure you want to delete this item?';
-    public confirmClicked = false;
-    public cancelClicked = false;
+    // public popoverTitle = 'Delete Confirmation';
+    // public popoverMessage = 'Are you sure you want to delete this item?';
+    // public confirmClicked = false;
+    // public cancelClicked = false;
 
     constructor(
         @Inject('itemService') private itemService,
-        private renderer: Renderer2
-    ) {}
+        private renderer: Renderer2,
+		public modalController: ModalController
+	) {}
 
     ngOnInit() {
         if (this.item) {
@@ -65,12 +68,13 @@ export class ItemDetailModal implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit(): void {
-        // prevents the list beneath from scrolling
-        setTimeout(() => this.renderer.selectRootElement('#name').focus(), 0);
+        // timeout prevents the list beneath from scrolling
+        // setTimeout(() => this.renderer.selectRootElement('#name').focus(), 0);
     }
 
     private formSubmit() {
         console.log(this.itemDetailForm.value);
+
         this.loading = true;
 
         if (this.item) {
@@ -83,14 +87,19 @@ export class ItemDetailModal implements OnInit, AfterViewInit {
         }
 
         this.loading = false;
-    }
+		this.modalController.dismiss();
+	}
 
-    private deleteItem() {
-        console.log('Deleting item # ' + JSON.stringify(this.item));
-        this.loading = true;
-        if (this.item) {
-            this.itemService.deleteItem(this.item);
-        }
-        this.loading = false;
-    }
+    // private deleteItem() {
+    //     console.log('Deleting item # ' + JSON.stringify(this.item));
+    //     this.loading = true;
+    //     if (this.item) {
+    //         this.itemService.deleteItem(this.item);
+    //     }
+    //     this.loading = false;
+    // }
+
+	private closeModal() {
+    	this.modalController.dismiss();
+	}
 }
