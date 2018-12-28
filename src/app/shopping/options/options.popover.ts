@@ -42,27 +42,14 @@ export class ShoppingItemOptionsPopover implements OnInit {
 
 		const modal = await this.modalController.create({
 			component: ItemDetailModal,
-			// showBackdrop: true,
 			componentProps: {
 				isNew: false,
 				modalTitle:  'Edit Item',
 				item: this.item
 			}
 		});
-		return await modal.present();
 
-		//     setTimeout(() => {
-    //         const modalRef = this.modalService.open(ItemDetailComponent);
-    //         modalRef.componentInstance.isNew = false;
-    //         modalRef.componentInstance.modalTitle = 'Edit Item';
-    //         modalRef.componentInstance.item = this.item;
-	//
-    //         modalRef.result.then((result) => {
-    //             console.log(result);
-    //         }).catch((error) => {
-    //             console.log(error);
-    //         });
-    //     });
+		return await modal.present();
 	}
 
 	private closePopover() {

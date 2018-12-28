@@ -1,6 +1,7 @@
-import {Component, OnInit, Input, Inject} from '@angular/core';
-// import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import {Item} from '../../item/item.model';
+import { Component, OnInit, Input, Inject } from '@angular/core';
+import { ModalController } from '@ionic/angular';
+
+import { Item } from '../../item/item.model';
 
 @Component({
     selector: 'us-add-items',
@@ -15,9 +16,9 @@ export class ShoppingListUpdateModal implements OnInit {
     private updateItems: Item[] = [];
 
     constructor(
-        // public activeModal: NgbActiveModal,
-        @Inject('itemService') private itemService
-    ) {
+        @Inject('itemService') private itemService,
+		public modalController: ModalController
+	) {
         this.itemService.getItemsSnapshot().subscribe(
             (response: Item[]) => {
                 this.initialItems = response;
@@ -25,8 +26,7 @@ export class ShoppingListUpdateModal implements OnInit {
         );
     }
 
-    ngOnInit() {
-    }
+    ngOnInit() {}
 
     private onItemListClick(item: Item) {
         const changedItem = this.initialItems.find(
@@ -46,7 +46,7 @@ export class ShoppingListUpdateModal implements OnInit {
             this.itemService.updateExistingItem(item);
         });
 
-        // this.activeModal.close();
-        this.loading = false;
+		this.modalController.dismiss();
+		this.loading = false;
     }
 }

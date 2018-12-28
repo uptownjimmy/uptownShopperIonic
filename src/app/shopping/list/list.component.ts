@@ -1,10 +1,11 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
-import { Item} from '../../item/item.model';
-// import {AddItemsComponent} from '../add-shopping-items/add-shopping-items.component';
 import { Subscription } from 'rxjs';
-import { PopoverController } from '@ionic/angular';
+import { ModalController, PopoverController } from '@ionic/angular';
+
+import { Item} from '../../item/item.model';
 import { ShoppingItemOptionsPopover } from '../options/options.popover';
 import { Store } from '../../store/store.model';
+import { ShoppingListUpdateModal } from '../update/update.modal';
 
 @Component({
     selector: 'us-shopping-list',
@@ -29,13 +30,14 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
     // ];
 	private items: Item[] = [];
 	private shoppingItems: Item[] = [];
-	private filteredShoppingItems: Item[] = [];
+	protected filteredShoppingItems: Item[] = [];
 	private stores: Store[];
 	private selectedStore = 'Filter by Store';
 
     constructor(
 		public popoverController : PopoverController,
-        @Inject('itemService') public itemService,
+		public modalController: ModalController,
+	@Inject('itemService') public itemService,
 		@Inject('shoppingService') public shoppingService,
 		@Inject('storeService') public storeService,
     ) {
@@ -62,22 +64,31 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
         this.subscription.unsubscribe();
     }
 
-    private addOrRemoveItems() {
-        // setTimeout(() => {
-        //     const modalRef = this.modalService.open(AddItemsComponent, {
-        //         size: 'lg',
-        //         windowClass: 'add-shopping-items-popup'
-        //     });
-        //     modalRef.componentInstance.items = this.items;
-        //     modalRef.componentInstance.shoppingItems = this.shoppingItems;
+    private async addOrRemoveItems() {
+		const modal = await this.modalController.create({
+			component: ShoppingListUpdateModal,
+			componentProps: {
+				items: this.items
+			}
+		});
+
+		return await modal.present();
+
+		// setTimeout(() => {
+		//     const modalRef = this.modalService.open(AddItemsComponent, {
+		//         size: 'lg',
+		//         windowClass: 'add-shopping-items-popup'
+		//     });
+		//     modalRef.componentInstance.items = this.items;
+		//     modalRef.componentInstance.shoppingItems = this.shoppingItems;
 		//
-        //     modalRef.result.then((result) => {
-        //         this.filterByStore(this.selectedStore);
-        //     }).catch((error) => {
-        //         console.log(error);
-        //     });
-        // });
-    }
+		//     modalRef.result.then((result) => {
+		//         this.filterByStore(this.selectedStore);
+		//     }).catch((error) => {
+		//         console.log(error);
+		//     });
+		// });
+	}
 
 	async openItemOptionsPopover(event, item) {
 		const popover = await this.popoverController.create({
