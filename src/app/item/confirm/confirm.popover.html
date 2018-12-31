@@ -1,0 +1,40 @@
+<ion-content>
+    <ion-row>
+        <ion-col text-center>
+            <h4>{{ item.name }}</h4>
+        </ion-col>
+    </ion-row>
+    <ion-row>
+        <ion-col text-center>
+            <ion-button
+                    color="dark"
+                    fill="outline"
+                    size="small"
+                    (click)="removeItemFromShoppingList()">
+                <b>Remove From List</b>
+            </ion-button>
+        </ion-col>
+    </ion-row>
+    <ion-row>
+        <ion-col text-center>
+            <ion-button
+                    color="primary"
+                    fill="outline"
+                    size="small"
+                    (click)="showItemDetails()">
+                <b>Show Details</b>
+            </ion-button>
+        </ion-col>
+    </ion-row>
+    <ion-row>
+        <ion-col text-center>
+            <ion-button
+                    color="medium"
+                    fill="outline"
+                    size="small"
+                    (click)="closePopover()">
+                Close
+            </ion-button>
+        </ion-col>
+    </ion-row>
+</ion-content>
