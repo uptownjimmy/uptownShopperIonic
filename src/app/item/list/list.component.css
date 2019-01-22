@@ -1,20 +1,3 @@
-ul {
-    list-style: none;
-}
-
-.btn, a.list-group-item:hover {
-    cursor: pointer;
-}
-
-ul.list-group a {
-    height: 50px !important;
-    width: 300px;
-}
-
-i.fa-pencil-square-o {
-    margin-top: 6px;
-}
-
-div.container-fluid {
-    padding-top: 20px;
+ion-icon[name="arrow-forward"] {
+    color: #666;
 }

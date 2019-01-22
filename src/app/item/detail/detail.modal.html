@@ -10,8 +10,8 @@
             <ion-label position="floating">Name</ion-label>
             <ion-input id="name" formControlName="name"></ion-input>
             <span
-                class="invalid"
-                *ngIf="!itemDetailForm.get('name').valid && itemDetailForm.get('name').touched">
+                    class="invalid"
+                    *ngIf="!itemDetailForm.get('name').valid && itemDetailForm.get('name').touched">
                 Please enter a name.
             </span>
         </ion-item>
@@ -22,13 +22,13 @@
                     formControlName="item_Type"
                     placeholder="Select One">
                 <ion-select-option
-                    *ngFor="let item_Type of item_Types"
-                    [value]="item_Type.id">{{item_Type.name}}
+                        *ngFor="let item_Type of item_Types"
+                        [value]="item_Type.id">{{item_Type.name}}
                 </ion-select-option>
             </ion-select>
             <span
-                class="invalid"
-                *ngIf="!itemDetailForm.get('item_Type').valid && itemDetailForm.get('item_Type').touched">
+                    class="invalid"
+                    *ngIf="!itemDetailForm.get('item_Type').valid && itemDetailForm.get('item_Type').touched">
                 Please enter a type.
             </span>
         </ion-item>
@@ -65,20 +65,17 @@
                     fill="outline"
                     size="small"
                     (click)="formSubmit()"
-                    [disabled]="!itemDetailForm.valid">
+                    [disabled]="!itemDetailForm.valid || itemDetailForm.pristine">
                 Save
             </ion-button>
-            <!--<button-->
-            <!--class="btn btn-outline-danger"-->
-            <!--mwlConfirmationPopover-->
-            <!--[popoverTitle]="popoverTitle"-->
-            <!--[popoverMessage]="popoverMessage"-->
-            <!--placement="bottom"-->
-            <!--(confirm)="confirmClicked = true; deleteItem()"-->
-            <!--(cancel)="cancelClicked = true"-->
-            <!--*ngIf="!isNew">-->
-            <!--Delete-->
-            <!--</button>-->
+            <ion-button
+                    color="danger"
+                    fill="outline"
+                    size="small"
+                    (click)="openConfirmDeleteItemPopover()"
+                    *ngIf="!isNew">
+                Delete
+            </ion-button>
             <ion-button
                     color="medium"
                     fill="outline"

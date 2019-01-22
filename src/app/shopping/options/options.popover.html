@@ -1,13 +1,13 @@
-<ion-content>
-    <ion-row>
-        <ion-col text-center>
-            <h4>{{ item.name }}</h4>
-        </ion-col>
-    </ion-row>
+<ion-card>
+    <ion-card-header text-center="">
+        <ion-card-title>
+            {{ item.name }}
+        </ion-card-title>
+    </ion-card-header>
     <ion-row>
         <ion-col text-center>
             <ion-button
-                    color="danger"
+                    color="dark"
                     fill="outline"
                     size="small"
                     (click)="removeItemFromShoppingList()">
@@ -37,4 +37,4 @@
             </ion-button>
         </ion-col>
     </ion-row>
-</ion-content>
+</ion-card>
