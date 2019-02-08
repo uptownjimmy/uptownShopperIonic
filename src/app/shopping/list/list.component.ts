@@ -6,6 +6,7 @@ import {Item} from '../../item/item.model';
 import {ShoppingItemOptionsPopover} from '../options/options.popover';
 import {ShoppingListUpdateModal} from '../update/update.modal';
 import {Store} from '../../store/store.model';
+import {ItemTypes} from '../../item/ItemType.model';
 
 @Component({
 	selector: 'us-shopping-list',
@@ -14,20 +15,7 @@ import {Store} from '../../store/store.model';
 })
 export class ShoppingListComponent implements OnInit, OnDestroy {
 	private subscription: Subscription;
-	// protected item_Types = [
-	//     {
-	//         id: 1,
-	//         key_Text: 'Grocery'
-	//     },
-	//     {
-	//         id: 2,
-	//         key_Text: 'Hardware'
-	//     },
-	//     {
-	//         id: 3,
-	//         key_Text: 'Clothing'
-	//     }
-	// ];
+	// protected item_Types = ItemTypes;
 	private items: Item[] = [];
 	private shoppingItems: Item[] = [];
 	protected filteredShoppingItems: Item[] = [];

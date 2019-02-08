@@ -21,7 +21,7 @@
             <ion-item
                     class="list-group-item"
                     *ngFor="let item of items"
-                    (click)="itemListClick($event, item)">
+                    (click)="itemListClick(item)">
                 <ion-label>{{ item.name }}</ion-label>
                 <ion-icon name="arrow-forward"></ion-icon>
             </ion-item>

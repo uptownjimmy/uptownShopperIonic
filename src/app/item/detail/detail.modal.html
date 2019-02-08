@@ -23,7 +23,8 @@
                     placeholder="Select One">
                 <ion-select-option
                         *ngFor="let item_Type of item_Types"
-                        [value]="item_Type.id">{{item_Type.name}}
+                        [value]="item_Type.id">
+                    {{item_Type.name}}
                 </ion-select-option>
             </ion-select>
             <span

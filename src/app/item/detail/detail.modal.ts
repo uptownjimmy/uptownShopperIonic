@@ -5,6 +5,7 @@ import {ModalController, PopoverController} from '@ionic/angular';
 import {Item} from '../item.model';
 // import {ShoppingItemOptionsPopover} from '../../shopping/options/options.popover';
 import {ConfirmDeleteItemPopover} from '../confirm/confirm.popover';
+import {ItemTypes} from '../ItemType.model';
 
 @Component({
 	selector: 'us-item-detail',
@@ -26,11 +27,7 @@ export class ItemDetailModal implements OnInit, AfterViewInit {
 		{name: 'Publix', active: false},
 		{name: 'Trader Joe\'s', active: false}
 	];
-	protected item_Types = [
-		{id: 1, name: 'Grocery'},
-		{id: 2, name: 'Hardware'},
-		{id: 3, name: 'Clothing'}
-	];
+	protected item_Types = ItemTypes;
 	public loading = false;
 	public itemDetailForm;
 	// public popoverTitle = 'Delete Confirmation';
@@ -71,10 +68,7 @@ export class ItemDetailModal implements OnInit, AfterViewInit {
 		});
 	}
 
-	ngAfterViewInit(): void {
-		// timeout prevents the list beneath from scrolling
-		// setTimeout(() => this.renderer.selectRootElement('#name').focus(), 0);
-	}
+	ngAfterViewInit(): void {}
 
 	private formSubmit() {
 		console.log(this.itemDetailForm.value);

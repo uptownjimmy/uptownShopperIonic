@@ -1,59 +1,60 @@
 import {Component, OnInit, OnDestroy, Inject} from '@angular/core';
-// import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {ModalController} from '@ionic/angular';
+
 import {Item} from '../item.model';
-// import {ItemDetailComponent} from '../item-detail/item-detail.component';
 import {Subscription} from 'rxjs';
+import {ItemDetailModal} from '../detail/detail.modal';
 
 @Component({
-    selector: 'us-item-list',
-    templateUrl: './list.component.html',
-    styleUrls: ['./list.component.css']
+	selector: 'us-item-list',
+	templateUrl: './list.component.html',
+	styleUrls: ['./list.component.css']
 })
 export class ItemListComponent implements OnInit, OnDestroy {
-    public items: Item[] = [];
-    private selectedItem: Item;
-    private subscription: Subscription;
+	public items: Item[] = [];
+	private subscription: Subscription;
 
-    constructor(
-        @Inject('itemService') public itemService,
-        // private modalService: NgbModal
-    ) {
-        this.itemService.getItems();
-        this.subscription = this.itemService.itemListChanged.subscribe(
-            (newItems: Item[]) => {
-                this.items = newItems;
-            }
-        );
-    }
+	constructor(
+		@Inject('itemService') public itemService,
+		public modalController: ModalController
+	) {
+		this.itemService.getItems();
+		this.subscription = this.itemService.itemListChanged.subscribe(
+			(newItems: Item[]) => {
+				this.items = newItems;
+			}
+		);
+	}
 
-    ngOnInit() {
-    }
+	ngOnInit() {
+	}
 
-    ngOnDestroy() {
-        this.subscription.unsubscribe();
-    }
+	ngOnDestroy() {
+		this.subscription.unsubscribe();
+	}
 
-    private openNewItem() {
-        // this.openItemDetailModal(true, 'Create New Item');
-    }
+	private async openNewItem() {
+		const modal = await this.modalController.create({
+			component: ItemDetailModal,
+			componentProps: {
+				isNew: false,
+				modalTitle: 'New Item'
+			}
+		});
 
-    private itemListClick(event, item) {
-        this.selectedItem = item;
-        // this.openItemDetailModal(false, 'Edit Item', item);
-    }
+		return await modal.present();
+	}
 
-    // private openItemDetailModal(isNew: boolean, modalTitle: string, item?: Item) {
-    //     setTimeout(() => {
-    //         const modalRef = this.modalService.open(ItemDetailComponent);
-    //         modalRef.componentInstance.isNew = isNew;
-    //         modalRef.componentInstance.modalTitle = modalTitle;
-    //         modalRef.componentInstance.item = item;
-	//
-    //         modalRef.result.then((result) => {
-    //             console.log(result);
-    //         }).catch((error) => {
-    //             console.log(error);
-    //         });
-    //     });
-    // }
+	private async itemListClick(item) {
+		const modal = await this.modalController.create({
+			component: ItemDetailModal,
+			componentProps: {
+				isNew: false,
+				modalTitle:  'Edit Item',
+				item: item
+			}
+		});
+
+		return await modal.present();
+	}
 }
