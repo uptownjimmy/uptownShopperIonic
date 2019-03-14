@@ -13,11 +13,19 @@ import { AppRoutingModule } from './app-routing.module';
 import { ItemService } from './services/item.service';
 import { ShoppingService } from './services/shopping.service';
 import { StoreService } from './services/store.service';
+import { DragulaModule } from 'ng2-dragula';
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, CommonModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule],
+  imports: [
+  	BrowserModule,
+	CommonModule,
+	IonicModule.forRoot(),
+	AppRoutingModule,
+	HttpClientModule,
+	DragulaModule
+  ],
   providers: [
 	StatusBar,
 	SplashScreen,

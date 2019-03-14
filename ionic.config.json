@@ -1,6 +1,8 @@
 {
   "name": "uptownShopperIonic",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular",
   "id": "3e8e746a"
 }
