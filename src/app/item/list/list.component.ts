@@ -1,6 +1,5 @@
 import {Component, OnInit, OnDestroy, Inject} from '@angular/core';
 import {ModalController} from '@ionic/angular';
-import { DragulaService } from 'ng2-dragula';
 
 import {Item} from '../item.model';
 import {Subscription} from 'rxjs';
@@ -17,8 +16,7 @@ export class ItemListComponent implements OnInit, OnDestroy {
 
 	constructor(
 		@Inject('itemService') public itemService,
-		public modalController: ModalController,
-		private dragulaService: DragulaService
+		public modalController: ModalController
 	) {
 		this.itemService.getItems();
 		this.subscription = this.itemService.itemListChanged.subscribe(
@@ -27,9 +25,7 @@ export class ItemListComponent implements OnInit, OnDestroy {
 			}
 		);
 
-		dragulaService.createGroup('Pantry', {
-			// removeOnSpill: true
-		});
+
 	}
 
 	ngOnInit() {
@@ -37,6 +33,12 @@ export class ItemListComponent implements OnInit, OnDestroy {
 
 	ngOnDestroy() {
 		this.subscription.unsubscribe();
+	}
+
+	private reorder(event) {
+		const itemToMove = this.items.splice(event.detail.from, 1)[0];
+		this.items.splice(event.detail.to, 0, itemToMove);
+		event.detail.complete();
 	}
 
 	private async openNewItem() {
