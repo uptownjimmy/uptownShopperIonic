@@ -8,7 +8,7 @@ describe('OptionsModal', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ItemDetailModal ]
+      declarations: [ ItemDetailModal ],
     })
     .compileComponents();
   }));

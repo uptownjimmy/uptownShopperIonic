@@ -1,9 +1,9 @@
-import {Item} from '../item/item.model';
-import {Subject} from 'rxjs';
-import { map } from 'rxjs/operators';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 // import {ToastrService} from 'ngx-toastr';
-import {Injectable, Inject} from '@angular/core';
+import {Inject, Injectable} from '@angular/core';
+import {Subject} from 'rxjs';
+import { map } from 'rxjs/operators';
+import {Item} from '../item/item.model';
 
 @Injectable()
 export class ItemService {
@@ -14,14 +14,14 @@ export class ItemService {
     constructor(
         private http: HttpClient,
         // private toastr: ToastrService,
-        @Inject('itemURL') private itemURL
+        @Inject('itemURL') private itemURL,
     ) {}
 
     public getItems(refresh: boolean = false) {
         this.loading = true;
         const getUrlObservable = this.http.get<Item[]>(this.itemURL);
         getUrlObservable.subscribe(
-            response => {
+            (response) => {
                 this.items = response;
                 this.itemListChanged.next(this.items.slice());
                 this.loading = false;
@@ -34,27 +34,27 @@ export class ItemService {
                 } else {
                     this.loading = false;
                     console.log(
-                        'API error occurred in ItemService.getItems(): ' + err.status
+                        'API error occurred in ItemService.getItems(): ' + err.status,
                     );
                 }
-            }
+            },
         );
     }
 
     public getItemsSnapshot() {
         const getSnapshotObservable = this.http.get(this.itemURL);
         return getSnapshotObservable.pipe(
-            map(response => response
+            map((response) => response
                 , (err: HttpErrorResponse) => {
                     if (err.error) {
                         console.log('Client error occurred in ItemService.getItemsSnapshot(): ', err.error.message);
                     } else {
                         console.log(
-                            'API error occurred in ItemService.getItemsSnapshot(): ' + err.status
+                            'API error occurred in ItemService.getItemsSnapshot(): ' + err.status,
                         );
                     }
-                }
-            )
+                },
+            ),
         );
     }
 
@@ -64,14 +64,14 @@ export class ItemService {
             item_Type: formValues.item_Type,
             active: true, // formValues.active;  need to add checkbox for this
             notes: formValues.notes,
-            created_By: 'JMJIII' // formValues.created_By; need to add logged-in user for this
+            created_By: 'JMJIII', // formValues.created_By; need to add logged-in user for this
         };
 
         if (!this.items.find((i) => i.name === item.name)) {
             this.loading = true;
             const postUrlObservable = this.http.post(this.itemURL, item);
             postUrlObservable.subscribe(
-                response => {
+                (response) => {
                     this.getItems();
                     // this.toastr.success('New item created.', 'Success!');
                     console.log('New item created: ' + JSON.stringify(response));
@@ -83,12 +83,12 @@ export class ItemService {
                     } else {
                         this.loading = false;
                         console.log(
-                            'API error occurred in ItemService.createNewItem(): ' + err.status + ', ' + err.error
+                            'API error occurred in ItemService.createNewItem(): ' + err.status + ', ' + err.error,
                         );
                     }
 
                     // this.toastr.error(item.name + ' could not be created.', 'No good!');
-                }
+                },
             );
         } else {
             // this.toastr.error('"' + item.name + '"' + ' already exists.', 'No good!');
@@ -99,7 +99,7 @@ export class ItemService {
         this.loading = true;
         const putUrlObservable = this.http.put(this.itemURL + '/' + item.id, item);
         putUrlObservable.subscribe(
-            response => {
+            (response) => {
                 this.loading = false;
                 this.itemListChanged.next(this.items.slice());
                 // this.toastr.success('Item updated.', 'Success!');
@@ -112,12 +112,12 @@ export class ItemService {
                 } else {
                     this.loading = false;
                     console.log(
-                        'API error occurred in ItemService.updateExistingItem(): ' + err.status + ', ' + err.error
+                        'API error occurred in ItemService.updateExistingItem(): ' + err.status + ', ' + err.error,
                     );
                 }
 
                 // this.toastr.error(item.name + ' could not be updated.', 'No good!');
-            }
+            },
         );
     }
 
@@ -125,7 +125,7 @@ export class ItemService {
         this.loading = true;
         const deleteUrlObservable = this.http.delete(this.itemURL + '/' + item.id);
         deleteUrlObservable.subscribe(
-            response => {
+            (response) => {
                 const index: number = this.items.indexOf(item);
                 if (index !== -1) {
                     this.items.splice(index, 1);
@@ -142,12 +142,12 @@ export class ItemService {
                 } else {
                     this.loading = false;
                     console.log(
-                        'API error occurred in ItemService.deleteItem(): ' + err.status + ', ' + err.error
+                        'API error occurred in ItemService.deleteItem(): ' + err.status + ', ' + err.error,
                     );
                 }
 
                 // this.toastr.error(item.name + ' could not be deleted.', 'No good!');
-            }
+            },
         );
     }
 }

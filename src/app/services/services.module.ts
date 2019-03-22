@@ -1,8 +1,8 @@
 import {NgModule} from '@angular/core';
 import {ItemService} from './item.service';
+import {LoggingService} from './logging.service';
 import {ShoppingService} from './shopping.service';
 import {StoreService} from './store.service';
-import {LoggingService} from './logging.service';
 
 @NgModule({})
 
@@ -14,12 +14,12 @@ export class ServicesModule {
                 ItemService,
                 ShoppingService,
                 StoreService,
-                LoggingService
-            ]
+                LoggingService,
+            ],
         };
     }
 }
 
 export {
-    ItemService, ShoppingService, StoreService, LoggingService
+    ItemService, ShoppingService, StoreService, LoggingService,
 };

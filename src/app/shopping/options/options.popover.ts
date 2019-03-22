@@ -1,22 +1,22 @@
-import { Component, OnInit, Input, Inject } from '@angular/core';
+import { Component, Inject, Input, OnInit } from '@angular/core';
 import { ModalController, PopoverController } from '@ionic/angular';
 
-import { Item } from '../../item/item.model';
 import { ItemDetailModal } from '../../item/detail/detail.modal';
+import { Item } from '../../item/item.model';
 
 @Component({
     selector: 'us-shopping-item-options',
     templateUrl: './options.popover.html',
-    styleUrls: ['./options.popover.css']
+    styleUrls: ['./options.popover.css'],
 })
 export class ShoppingItemOptionsPopover implements OnInit {
     @Input() item: Item;
-	private loading = true;
+  private loading = true;
 
     constructor(
         @Inject('itemService') private itemService,
-		public popoverController: PopoverController,
-		public modalController: ModalController
+        public popoverController: PopoverController,
+        public modalController: ModalController,
     ) {}
 
     ngOnInit() {
@@ -33,26 +33,26 @@ export class ShoppingItemOptionsPopover implements OnInit {
             this.itemService.updateExistingItem(this.item);
         }
 
-		this.popoverController.dismiss();
-		this.loading = false;
+        this.popoverController.dismiss();
+        this.loading = false;
     }
 
     private async showItemDetails() {
-		this.popoverController.dismiss();
+    this.popoverController.dismiss();
 
-		const modal = await this.modalController.create({
-			component: ItemDetailModal,
-			componentProps: {
-				isNew: false,
-				modalTitle:  'Edit Item',
-				item: this.item
-			}
-		});
+    const modal = await this.modalController.create({
+      component: ItemDetailModal,
+      componentProps: {
+        isNew: false,
+        modalTitle:  'Edit Item',
+        item: this.item,
+      },
+    });
 
-		return await modal.present();
-	}
+    return await modal.present();
+  }
 
-	private closePopover() {
-		this.popoverController.dismiss();
-	}
+  private closePopover() {
+    this.popoverController.dismiss();
+  }
 }

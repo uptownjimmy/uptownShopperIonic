@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { TabsPage } from './tabs.page';
-import { ShoppingListComponent } from '../shopping/list/list.component';
 import { ItemListComponent } from '../item/list/list.component';
+import { ShoppingListComponent } from '../shopping/list/list.component';
 import { StoreListComponent } from '../store/list/list.component';
+import { TabsPage } from './tabs.page';
 // import { HomePage } from '../home/home.page';
 // import { AboutPage } from '../about/about.page';
 // import { ContactPage } from '../contact/contact.page';
@@ -14,26 +14,26 @@ const routes: Routes = [
     path: 'tabs',
     component: TabsPage,
     children: [
-		{
-			path: '',
-			redirectTo: '/tabs/(shopping:shopping)',
-			pathMatch: 'full',
-		},
-		{
-			path: 'shopping',
-			outlet: 'shopping',
-			component: ShoppingListComponent
-		},
-		{
-			path: 'pantry',
-			outlet: 'pantry',
-			component: ItemListComponent
-		},
-		{
-			path: 'stores',
-			outlet: 'stores',
-			component: StoreListComponent
-		}
+    {
+      path: '',
+      redirectTo: '/tabs/(shopping:shopping)',
+      pathMatch: 'full',
+    },
+    {
+      path: 'shopping',
+      outlet: 'shopping',
+      component: ShoppingListComponent,
+    },
+    {
+      path: 'pantry',
+      outlet: 'pantry',
+      component: ItemListComponent,
+    },
+    {
+      path: 'stores',
+      outlet: 'stores',
+      component: StoreListComponent,
+    },
       // {
       //   path: '',
       //   redirectTo: '/tabs/(home:home)',
@@ -54,17 +54,17 @@ const routes: Routes = [
       //   outlet: 'contact',
       //   component: ContactPage
       // }
-    ]
+    ],
   },
   {
     path: '',
     redirectTo: '/tabs/(shopping:shopping)',
-    pathMatch: 'full'
-  }
+    pathMatch: 'full',
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class TabsPageRoutingModule {}

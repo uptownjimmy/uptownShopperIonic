@@ -7,8 +7,8 @@ import {StoreService} from '../store.service';
     templateUrl: './list.component.html',
     styleUrls: ['./list.component.css'],
     providers: [
-        StoreService
-    ]
+        StoreService,
+    ],
 })
 export class StoreListComponent implements OnInit {
     public stores: Store[];
