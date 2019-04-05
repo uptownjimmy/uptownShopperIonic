@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { StoreDetailComponent } from './detail.modal';
+import { ReorderModalComponent } from './reorder.modal';
 
-describe('DetailModal', () => {
-  let component: StoreDetailComponent;
-  let fixture: ComponentFixture<StoreDetailComponent>;
+describe('ReorderModal', () => {
+  let component: ReorderModalComponent;
+  let fixture: ComponentFixture<ReorderModalComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ StoreDetailComponent ],
+      declarations: [ ReorderModalComponent ],
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(StoreDetailComponent);
+    fixture = TestBed.createComponent(ReorderModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

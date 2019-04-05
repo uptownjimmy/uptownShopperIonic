@@ -1,32 +1,37 @@
 <!--<ngx-loading [show]="itemService.loading"></ngx-loading>-->
 <ion-header>
     <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-button size="small" color="primary" fill="outline" (click)="openReorderModal()">
+                <ion-icon name="reorder"></ion-icon>
+            </ion-button>
+        </ion-buttons>
         <ion-title>
-            <h3>Pantry Items
-            </h3>
+            <h3>Pantry Items</h3>
         </ion-title>
+        <ion-buttons slot="end">
+            <ion-button size="small" color="success" fill="outline" (click)="openNewItem()">
+                <ion-icon name="add"></ion-icon>
+            </ion-button>
+        </ion-buttons>
     </ion-toolbar>
+
     <ion-toolbar>
         <ion-title>
-            <ion-button size="small" color="primary" fill="outline" (click)="openNewItem()">
-                <ion-icon name="add"></ion-icon>
-                Create New Item
-            </ion-button>
+
         </ion-title>
     </ion-toolbar>
+
 </ion-header>
 <ion-content>
-        <ion-list>
-            <ion-reorder-group (ionItemReorder)="reorder($event)" disabled="false">
-                <ion-item
-                        class="list-group-item"
-                        *ngFor="let item of items"
-                        (click)="itemListClick(item)">
-                    <ion-label>{{ item.name }}</ion-label>
-                    <!--<ion-icon name="arrow-forward"></ion-icon>-->
-                    <ion-reorder slot="end"></ion-reorder>
-                </ion-item>
-            </ion-reorder-group>
-        </ion-list>
+    <ion-list>
+        <ion-item
+                class="list-group-item"
+                *ngFor="let item of items"
+                (click)="itemListClick(item)">
+            <ion-label>{{ item.name }}</ion-label>
+            <ion-icon name="arrow-forward"></ion-icon>
+        </ion-item>
+    </ion-list>
 </ion-content>
 

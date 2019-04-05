@@ -19,7 +19,7 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
   private items: Item[] = [];
   private shoppingItems: Item[] = [];
   protected filteredShoppingItems: Item[] = [];
-  private stores: Store[];
+  private stores = Store;
   private selectedStore = 'Filter by Store';
 
   constructor(

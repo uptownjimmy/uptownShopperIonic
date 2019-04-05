@@ -1,7 +1,3 @@
-/**
- * Created by uptownjimmy on 12.8.18.
- */
-
 export class Store {
   public id: number;
   public name: string;
@@ -13,3 +9,15 @@ export class Store {
     this.location = location;
   }
 }
+
+// interface IStore {
+//   name: string;
+//   active: boolean;
+// }
+//
+// export const Store: IStore[] = [
+//   {name: 'Kroger', active: false},
+//   {name: 'Lowe\'s', active: false},
+//   {name: 'Publix', active: false},
+//   {name: 'Trader Joe\'s', active: false},
+// ];

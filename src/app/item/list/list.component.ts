@@ -4,6 +4,7 @@ import {ModalController} from '@ionic/angular';
 import {Subscription} from 'rxjs';
 import {ItemDetailModal} from '../detail/detail.modal';
 import {Item} from '../item.model';
+import {ReorderModalComponent} from '../reorder/reorder.modal';
 
 @Component({
   selector: 'us-item-list',
@@ -27,17 +28,10 @@ export class ItemListComponent implements OnInit, OnDestroy {
 
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
-  }
-
-  private reorder(event) {
-    const itemToMove = this.items.splice(event.detail.from, 1)[0];
-    this.items.splice(event.detail.to, 0, itemToMove);
-    event.detail.complete();
   }
 
   private async openNewItem() {
@@ -57,8 +51,21 @@ export class ItemListComponent implements OnInit, OnDestroy {
       component: ItemDetailModal,
       componentProps: {
         isNew: false,
-        modalTitle:  'Edit Item',
+        modalTitle: 'Edit Item',
         item,
+      },
+    });
+
+    return await modal.present();
+  }
+
+  private async openReorderModal() {
+    const modal = await this.modalController.create({
+      component: ReorderModalComponent,
+      componentProps: {
+        isNew: false,
+        modalTitle: 'Reorder Items',
+        // store,
       },
     });
 

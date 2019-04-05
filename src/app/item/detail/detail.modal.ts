@@ -6,6 +6,7 @@ import {ModalController, PopoverController} from '@ionic/angular';
 import {ConfirmDeleteItemPopover} from '../confirm/confirm.popover';
 import {Item} from '../item.model';
 import {ItemTypes} from '../ItemType.model';
+import {Store} from '../../store/store.model';
 
 @Component({
   selector: 'us-item-detail',
@@ -21,12 +22,7 @@ export class ItemDetailModal implements OnInit, AfterViewInit {
   private item_Type: number = null;
   private active: boolean = null;
   private notes: string = null;
-  private stores = [
-    {name: 'Kroger', active: false},
-    {name: 'Lowe\'s', active: false},
-    {name: 'Publix', active: false},
-    {name: 'Trader Joe\'s', active: false},
-  ];
+  private stores = Store;
   protected item_Types = ItemTypes;
   public loading = false;
   public itemDetailForm;
@@ -62,9 +58,9 @@ export class ItemDetailModal implements OnInit, AfterViewInit {
       item_Type: new FormControl(this.item_Type, Validators.required),
       active: new FormControl(this.active),
       notes: new FormControl(this.notes),
-      kroger: new FormControl(this.stores[0].active),
-      traderJoe: new FormControl(this.stores[1].active),
-      lowe: new FormControl(this.stores[3].active),
+      // kroger: new FormControl(this.stores[0].active),
+      // traderJoe: new FormControl(this.stores[1].active),
+      // lowe: new FormControl(this.stores[3].active),
     });
   }
 
