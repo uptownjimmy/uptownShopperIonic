@@ -3,6 +3,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
+import { ApolloModule, Apollo } from 'apollo-angular';
+import { HttpLinkModule, HttpLink } from 'apollo-angular-link-http';
+import { InMemoryCache } from 'apollo-cache-inmemory';
 
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
@@ -19,10 +22,12 @@ import { StoreService } from './services/store.service';
   entryComponents: [],
   imports: [
     BrowserModule,
-  CommonModule,
-  IonicModule.forRoot(),
-  AppRoutingModule,
-  HttpClientModule,
+    CommonModule,
+    IonicModule.forRoot(),
+    AppRoutingModule,
+    HttpClientModule,
+    ApolloModule,
+    HttpLinkModule
   ],
   providers: [
   StatusBar,
@@ -31,8 +36,18 @@ import { StoreService } from './services/store.service';
   { provide: 'itemService', useClass: ItemService },
   { provide: 'shoppingService', useClass: ShoppingService },
   { provide: 'storeService', useClass: StoreService },
-  { provide: 'itemURL', useValue: 'http://localhost:5000/api/item' },
+  // { provide: 'itemURL', useValue: 'http://localhost:5000/api/item' },
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule {
+  constructor(
+    apollo: Apollo,
+    httpLink: HttpLink
+  ) {
+    apollo.create({
+      link: httpLink.create({ uri: 'https://localhost:5001/api/graphql' }),
+      cache: new InMemoryCache()
+    });
+  }
+}

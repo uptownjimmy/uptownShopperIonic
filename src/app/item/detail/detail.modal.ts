@@ -1,12 +1,12 @@
-import {AfterViewInit, Component, Inject, Input, OnInit, Renderer2} from '@angular/core';
+import {AfterViewInit, Component, Inject, Input, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {ModalController, PopoverController} from '@ionic/angular';
 
 // import {ShoppingItemOptionsPopover} from '../../shopping/options/options.popover';
+// import {Store} from '../../store/store.model';
 import {ConfirmDeleteItemPopover} from '../confirm/confirm.popover';
 import {Item} from '../item.model';
 import {ItemTypes} from '../ItemType.model';
-import {Store} from '../../store/store.model';
 
 @Component({
   selector: 'us-item-detail',
@@ -22,7 +22,7 @@ export class ItemDetailModal implements OnInit, AfterViewInit {
   private item_Type: number = null;
   private active: boolean = null;
   private notes: string = null;
-  private stores = Store;
+  // private stores = Store;
   protected item_Types = ItemTypes;
   public loading = false;
   public itemDetailForm;
@@ -33,7 +33,7 @@ export class ItemDetailModal implements OnInit, AfterViewInit {
 
   constructor(
     @Inject('itemService') private itemService,
-    private renderer: Renderer2,
+    // private renderer: Renderer2,
     public modalController: ModalController,
     public popoverController: PopoverController,
   ) {

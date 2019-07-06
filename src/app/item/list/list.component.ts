@@ -38,7 +38,7 @@ export class ItemListComponent implements OnInit, OnDestroy {
     const modal = await this.modalController.create({
       component: ItemDetailModal,
       componentProps: {
-        isNew: false,
+        // isNew: false,
         modalTitle: 'New Item',
       },
     });
@@ -50,7 +50,7 @@ export class ItemListComponent implements OnInit, OnDestroy {
     const modal = await this.modalController.create({
       component: ItemDetailModal,
       componentProps: {
-        isNew: false,
+        // isNew: false,
         modalTitle: 'Edit Item',
         item,
       },
