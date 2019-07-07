@@ -5,8 +5,8 @@ import {ModalController, PopoverController} from '@ionic/angular';
 // import {ShoppingItemOptionsPopover} from '../../shopping/options/options.popover';
 // import {Store} from '../../store/store.model';
 import {ConfirmDeleteItemPopover} from '../confirm/confirm.popover';
-import {Item} from '../item.model';
-import {ItemTypes} from '../ItemType.model';
+import {ItemCategories} from '../ItemCategory.model';
+import {QueryItem} from '../../types';
 
 @Component({
   selector: 'us-item-detail',
@@ -16,14 +16,14 @@ import {ItemTypes} from '../ItemType.model';
 export class ItemDetailModal implements OnInit, AfterViewInit {
   @Input() isNew: boolean;
   @Input() modalTitle: string;
-  @Input() item: Item;
+  @Input() item: QueryItem;
 
   private name: string = null;
-  private item_Type: number = null;
+  private category: string = null;
   private active: boolean = null;
   private notes: string = null;
   // private stores = Store;
-  protected item_Types = ItemTypes;
+  protected categories = ItemCategories;
   public loading = false;
   public itemDetailForm;
   // public popoverTitle = 'Delete Confirmation';
@@ -42,7 +42,7 @@ export class ItemDetailModal implements OnInit, AfterViewInit {
   ngOnInit() {
     if (this.item) {
       this.name = this.item.name;
-      this.item_Type = this.item.item_Type;
+      this.category = this.item.category;
       this.active = this.item.active;
       this.notes = this.item.notes;
       // this.item.store_Names.forEach(store_Name => {
@@ -55,7 +55,7 @@ export class ItemDetailModal implements OnInit, AfterViewInit {
     }
     this.itemDetailForm = new FormGroup({
       name: new FormControl(this.name, Validators.required),
-      item_Type: new FormControl(this.item_Type, Validators.required),
+      category: new FormControl(this.category, Validators.required),
       active: new FormControl(this.active),
       notes: new FormControl(this.notes),
       // kroger: new FormControl(this.stores[0].active),
@@ -73,7 +73,7 @@ export class ItemDetailModal implements OnInit, AfterViewInit {
 
     if (this.item) {
       this.item.name = this.itemDetailForm.value.name;
-      this.item.item_Type = this.itemDetailForm.value.item_Type;
+      this.item.category = this.itemDetailForm.value.category;
       this.item.notes = this.itemDetailForm.value.notes;
       this.itemService.updateExistingItem(this.item);
     } else {

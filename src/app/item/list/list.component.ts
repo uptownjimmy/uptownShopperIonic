@@ -5,6 +5,7 @@ import {Subscription} from 'rxjs';
 import {ItemDetailModal} from '../detail/detail.modal';
 import {Item} from '../item.model';
 import {ReorderModalComponent} from '../reorder/reorder.modal';
+import {QueryItem} from '../../types';
 
 @Component({
   selector: 'us-item-list',
@@ -12,7 +13,7 @@ import {ReorderModalComponent} from '../reorder/reorder.modal';
   styleUrls: ['./list.component.css'],
 })
 export class ItemListComponent implements OnInit, OnDestroy {
-  public items: Item[] = [];
+  public items: QueryItem[] = [];
   private subscription: Subscription;
 
   constructor(
@@ -21,11 +22,10 @@ export class ItemListComponent implements OnInit, OnDestroy {
   ) {
     this.itemService.getItems();
     this.subscription = this.itemService.itemListChanged.subscribe(
-      (newItems: Item[]) => {
+      (newItems: QueryItem[]) => {
         this.items = newItems;
       },
     );
-
   }
 
   ngOnInit() {}

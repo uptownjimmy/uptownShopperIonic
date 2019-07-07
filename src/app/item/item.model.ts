@@ -5,19 +5,19 @@
 export class Item {
   public id: number;
   public name: string;
-  public item_Type: number;
+  public category: string;
   public active: boolean;
   public notes: string;
 
   constructor(
     name: string,
-    item_Type: number,
+    category: string,
     active: boolean,
     notes: string,
     id?: number,
   ) {
     this.name = name;
-    this.item_Type = item_Type;
+    this.category = category;
     this.active = active;
     this.notes = notes;
     this.id = id;

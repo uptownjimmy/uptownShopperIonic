@@ -9,37 +9,24 @@
     <ion-item>
       <ion-label position="floating">Name</ion-label>
       <ion-input id="name" formControlName="name"></ion-input>
-      <span
-        class="invalid"
-        *ngIf="!itemDetailForm.get('name').valid && itemDetailForm.get('name').touched">
-                Please enter a name.
-            </span>
+      <span class="invalid" *ngIf="!itemDetailForm.get('name').valid && itemDetailForm.get('name').touched">
+          Please enter a name.
+      </span>
     </ion-item>
     <ion-item>
-      <ion-label position="floating">Type</ion-label>
-      <ion-select
-        id="item_Type"
-        formControlName="item_Type"
-        placeholder="Select One">
-        <ion-select-option
-          *ngFor="let item_Type of item_Types"
-          [value]="item_Type.id">
-          {{item_Type.name}}
+      <ion-label position="floating">Category</ion-label>
+      <ion-select id="category" formControlName="category" placeholder="Select One">
+        <ion-select-option *ngFor="let category of categories" [value]="category.name">
+          {{category.name}}
         </ion-select-option>
       </ion-select>
-      <span
-        class="invalid"
-        *ngIf="!itemDetailForm.get('item_Type').valid && itemDetailForm.get('item_Type').touched">
-                Please enter a type.
-            </span>
+      <span class="invalid" *ngIf="!itemDetailForm.get('category').valid && itemDetailForm.get('category').touched">
+          Please enter a category.
+      </span>
     </ion-item>
     <ion-item>
       <ion-label position="floating">Notes</ion-label>
-      <ion-textarea
-        id="notes"
-        formControlName="notes"
-        rows="4">
-      </ion-textarea>
+      <ion-textarea id="notes" formControlName="notes" rows="4"></ion-textarea>
     </ion-item>
   </form>
 

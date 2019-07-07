@@ -1,6 +1,5 @@
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-// import {ToastrService} from 'ngx-toastr';
-import {Inject, Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import {Observable} from 'apollo-client/util/Observable';
 import gql from 'graphql-tag';
@@ -14,39 +13,46 @@ export class ItemService {
   public items: QueryItem[] = [];
   public itemListChanged = new Subject<QueryItem[]>();
   private loading = false;
-
-  private querySubscription: Subscription;
+  private getItemsQuery = gql`
+    query {
+      items {
+        itemId
+        name
+        category
+        active
+        notes
+      }
+    }
+  `;
+  private createItemsQuery = gql`
+    mutation ($name: String!, $category: String!, $active: Boolean!, $notes: String!) {
+        createItem(item: {name: $name, category: $category, active: $active, notes: $notes}) {
+        name
+        category
+        active
+        notes
+      }
+    }
+  `;
 
   constructor(
       private http: HttpClient,
-      // private toastr: ToastrService,
-      // @Inject('itemURL') private itemURL,
       private apollo: Apollo,
   ) {}
 
     public getItems(refresh: boolean = false) {
       this.loading = true;
 
-      const getItemsAsync = gql`
-        query {
-          items {
-            name
-            category
-            active
-            notes
-          }
-        }
-      `;
-
-      this.querySubscription = this.apollo.query<any>({
-        query: getItemsAsync,
-      })
+      // this.querySubscription = this.apollo.watchQuery<any>({
+      this.apollo.watchQuery<any>({
+        query: this.getItemsQuery,
+      }).valueChanges
         .subscribe((result) => {
           this.items = result.data && result.data.items;
           this.loading = result.loading;
           const errors = result.errors;
           if (!errors) {
-            console.log('ItemService.getItems(): item list retrieved.');
+            console.log('ItemService.getItems(): item list retrieved: ' + this.items);
             this.itemListChanged.next(this.items.slice());
           } else {
             console.log('Error occurred in ItemService.getItems(): ', errors.entries());
@@ -54,82 +60,52 @@ export class ItemService {
 
           this.loading = false;
         });
-
-      // const getUrlObservable = this.http.get<Item[]>(this.itemURL);
-      // getUrlObservable.subscribe(
-      //     (response) => {
-      //         this.items = response;
-      //         this.itemListChanged.next(this.items.slice());
-      //         this.loading = false;
-      //         console.log('ItemService.getItems(): Item list retrieved.');
-      //     },
-      //     (err: HttpErrorResponse) => {
-      //         if (err.error) {
-      //             console.log('Client error occurred in ItemService.getItems(): ', err.error.message);
-      //             this.loading = false;
-      //         } else {
-      //             this.loading = false;
-      //             console.log(
-      //                 'API error occurred in ItemService.getItems(): ' + err.status,
-      //             );
-      //         }
-      //     },
-      // );
     }
 
-    // public getItemsSnapshot() {
-    //     const getSnapshotObservable = this.http.get(this.itemURL);
-    //     return getSnapshotObservable.pipe(
-    //         map((response) => response
-    //             , (err: HttpErrorResponse) => {
-    //                 if (err.error) {
-    //                     console.log('Client error occurred in ItemService.getItemsSnapshot(): ', err.error.message);
-    //                 } else {
-    //                     console.log(
-    //                         'API error occurred in ItemService.getItemsSnapshot(): ' + err.status,
-    //                     );
-    //                 }
-    //             },
-    //         ),
-    //     );
-    // }
+    public getItemsSnapshot() {
+      this.apollo.query<any>({
+        query: this.getItemsQuery,
+      }).subscribe((result) => {
+        this.items = result.data && result.data.items;
+        this.loading = result.loading;
+        const errors = result.errors;
+        if (!errors) {
+          console.log('ItemService.getItemsSnapshot(): item snapshot retrieved: ' + this.items);
+          return this.items.slice();
+        } else {
+          console.log('Error occurred in ItemService.getItemsSnapshot(): ', errors.entries());
+        }
 
-    // public createNewItem(formValues: Item) {
-    //     const item = {
-    //         name: formValues.name,
-    //         item_Type: formValues.item_Type,
-    //         active: true, // formValues.active;  need to add checkbox for this
-    //         notes: formValues.notes,
-    //         created_By: 'JMJIII', // formValues.created_By; need to add logged-in user for this
-    //     };
-    //
-    //     if (!this.items.find((i) => i.name === item.name)) {
-    //         this.loading = true;
-    //         const postUrlObservable = this.http.post(this.itemURL, item);
-    //         postUrlObservable.subscribe(
-    //             (response) => {
-    //                 this.getItems();
-    //                 // this.toastr.success('New item created.', 'Success!');
-    //                 console.log('New item created: ' + JSON.stringify(response));
-    //             },
-    //             (err: HttpErrorResponse) => {
-    //                 if (err.error) {
-    //                     this.loading = false;
-    //                     console.log('Client error occurred in ItemService.createNewItem(): ', err.error.message);
-    //                 } else {
-    //                     this.loading = false;
-    //                     console.log(
-    //                         'API error occurred in ItemService.createNewItem(): ' + err.status + ', ' + err.error,
-    //                     );
-    //                 }
-    //
-    //                 // this.toastr.error(item.name + ' could not be created.', 'No good!');
-    //             },
-    //         );
-    //     } else {
-    //         // this.toastr.error('"' + item.name + '"' + ' already exists.', 'No good!');
-    //     }
-    // }
+        this.loading = false;
+      });
+    }
+
+    public createNewItem(formValues: QueryItem) {
+      if (!this.items.find((i) => i.name === formValues.name)) {
+        this.loading = true;
+
+        this.apollo.mutate({
+          mutation: this.createItemsQuery,
+          variables: {
+            name: formValues.name,
+            category: formValues.category,
+            active: true,
+            notes: formValues.notes ? formValues.notes : '',
+          },
+          refetchQueries: [{
+            query: this.getItemsQuery,
+          }],
+        }).subscribe(
+          ({data}) => {
+            console.log('ItemService.createNewItem(): successful');
+          }, (error) => {
+            console.log('There was an error sending the mutation: ', error);
+          },
+        );
+      } else {
+        // alert user for 'item by that name already exists'
+      }
+    }
 
     // public updateExistingItem(item: Item) {
     //     this.loading = true;

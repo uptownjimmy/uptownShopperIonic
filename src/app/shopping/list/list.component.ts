@@ -3,7 +3,7 @@ import {ModalController, PopoverController} from '@ionic/angular';
 import {Subscription} from 'rxjs';
 
 import {Item} from '../../item/item.model';
-import {ItemTypes} from '../../item/ItemType.model';
+import {ItemCategories} from '../../item/ItemCategory.model';
 import {Store} from '../../store/store.model';
 import {ShoppingItemOptionsPopover} from '../options/options.popover';
 import {ShoppingListUpdateModal} from '../update/update.modal';
@@ -15,7 +15,7 @@ import {ShoppingListUpdateModal} from '../update/update.modal';
 })
 export class ShoppingListComponent implements OnInit, OnDestroy {
   private subscription: Subscription;
-  // protected item_Types = ItemTypes;
+  // protected itemCategories = ItemCategories;
   private items: Item[] = [];
   private shoppingItems: Item[] = [];
   protected filteredShoppingItems: Item[] = [];
