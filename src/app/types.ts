@@ -1,5 +1,5 @@
 export type QueryItem = {
-  // itemId: number;
+  itemId: number;
   name: string;
   category: string;
   active: boolean;

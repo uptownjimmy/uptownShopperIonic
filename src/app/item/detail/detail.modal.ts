@@ -72,6 +72,7 @@ export class ItemDetailModal implements OnInit, AfterViewInit {
     this.loading = true;
 
     if (this.item) {
+      // this.item.itemId;
       this.item.name = this.itemDetailForm.value.name;
       this.item.category = this.itemDetailForm.value.category;
       this.item.notes = this.itemDetailForm.value.notes;
