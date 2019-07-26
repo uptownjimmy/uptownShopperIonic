@@ -12,6 +12,7 @@ import { QueryItem } from '../types';
 export class ItemService {
   public items: QueryItem[] = [];
   public itemListChanged = new Subject<QueryItem[]>();
+  public itemSnapshotChanged = new Subject<QueryItem[]>();
   private loading = false;
 
   private getItemsQuery = gql`
@@ -26,7 +27,19 @@ export class ItemService {
     }
   `;
 
-  private createItemsQuery = gql`
+  private getItemsSnapshotQuery = gql`
+    query {
+      items {
+        itemId
+        name
+        category
+        active
+        notes
+      }
+    }
+  `;
+
+  private createItemQuery = gql`
     mutation ($name: String!, $category: String!, $active: Boolean!, $notes: String!) {
       createItem(item: {name: $name, category: $category, active: $active, notes: $notes}) {
         name
@@ -37,9 +50,9 @@ export class ItemService {
     }
   `;
 
-  private updateItemsQuery = gql`
-    mutation ($itemId: Int!, $name: String!, $category: String!, $active: Boolean!, $notes: String!) {
-      updateItem(itemId: $itemId, item: {name: $name, category: $category, active: $active, notes: $notes}) {
+  private updateItemQuery = gql`
+    mutation ($itemId: ID!, $name: String!, $category: String!, $active: Boolean!, $notes: String!) {
+      updateItem(item: {itemId: $itemId, name: $name, category: $category, active: $active, notes: $notes}) {
         itemId
         name
         category
@@ -49,10 +62,19 @@ export class ItemService {
     }
   `;
 
-  constructor(
-      private http: HttpClient,
-      private apollo: Apollo,
-  ) {}
+  private deleteItemQuery = gql`
+    mutation ($itemId: ID!, $name: String!, $category: String!, $active: Boolean!, $notes: String!) {
+      deleteItem(item: {itemId: $itemId, name: $name, category: $category, active: $active, notes: $notes}) {
+        itemId
+        name
+        category
+        active
+        notes
+      }
+    }
+  `;
+
+  constructor(private http: HttpClient, private apollo: Apollo) {}
 
   public getItems(refresh: boolean = false) {
     this.loading = true;
@@ -75,16 +97,16 @@ export class ItemService {
       });
   }
 
-  public getItemsSnapshot() {
-    this.apollo.query<any>({
-      query: this.getItemsQuery,
-    }).subscribe((result) => {
-      this.items = result.data && result.data.items;
+  getItemsSnapshot() {
+    this.apollo.watchQuery<any>({
+      query: this.getItemsSnapshotQuery,
+    }).valueChanges
+      .subscribe((result) => {
       // this.loading = result.loading;
       const errors = result.errors;
       if (!errors) {
-        console.dir('ItemService.getItemsSnapshot(): item snapshot retrieved: ' + this.items);
-        return this.items.slice();
+        console.dir('ItemService.getItemsSnapshot() item snapshot retrieved: ' + this.items);
+        this.itemSnapshotChanged.next(result.data.items.slice());
       } else {
         console.dir('Error occurred in ItemService.getItemsSnapshot(): ', errors.entries());
       }
@@ -93,12 +115,12 @@ export class ItemService {
     });
   }
 
-  public createNewItem(formValues: QueryItem) {
+  createNewItem(formValues: QueryItem) {
     if (!this.items.find((i) => i.name === formValues.name)) {
       this.loading = true;
 
       this.apollo.mutate({
-        mutation: this.createItemsQuery,
+        mutation: this.createItemQuery,
         variables: {
           name: formValues.name,
           category: formValues.category,
@@ -110,7 +132,7 @@ export class ItemService {
         }],
       }).subscribe(
         ({data}) => {
-          console.dir('ItemService.createNewItem(): successful');
+          console.dir('ItemService.createNewItem() successful');
         }, (error) => {
           console.dir('There was an error creating the new item: ', error);
         },
@@ -122,11 +144,11 @@ export class ItemService {
     this.loading = false;
   }
 
-  public updateExistingItem(item: QueryItem) {
+  updateExistingItem(item: QueryItem) {
     this.loading = true;
 
     this.apollo.mutate({
-      mutation: this.updateItemsQuery,
+      mutation: this.updateItemQuery,
       variables: {
         itemId: item.itemId,
         name: item.name,
@@ -139,17 +161,43 @@ export class ItemService {
       }],
     }).subscribe(
       ({data}) => {
-        console.dir('ItemService.createNewItem(): successful');
+        console.dir('ItemService.updateExistingItem() successful');
         this.loading = false;
       }, (error) => {
-        console.dir('There was an error creating the new item: ', error);
+        console.dir('There was an error updating the item: ', error);
       },
     );
 
     this.loading = false;
   }
 
-    // public deleteItem(item: Item) {
+  deleteItem(item: QueryItem) {
+    this.loading = true;
+
+    this.apollo.mutate({
+      mutation: this.deleteItemQuery,
+      variables: {
+        itemId: item.itemId,
+        name: item.name,
+        category: item.category,
+        active: true,
+        notes: item.notes ? item.notes : '',
+      },
+      refetchQueries: [{
+        query: this.getItemsQuery,
+      }],
+    }).subscribe(
+      ({data}) => {
+        console.dir('ItemService.deleteItem() successful');
+        this.loading = false;
+      }, (error) => {
+        console.dir('There was an error deleting the item: ', error);
+      },
+    );
+
+    this.loading = false;
+
+
     //     this.loading = true;
     //     const deleteUrlObservable = this.http.delete(this.itemURL + '/' + item.id);
     //     deleteUrlObservable.subscribe(
@@ -177,5 +225,5 @@ export class ItemService {
     //             // this.toastr.error(item.name + ' could not be deleted.', 'No good!');
     //         },
     //     );
-    // }
+  }
 }

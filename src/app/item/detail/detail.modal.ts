@@ -23,7 +23,7 @@ export class ItemDetailModal implements OnInit, AfterViewInit {
   private active: boolean = null;
   private notes: string = null;
   // private stores = Store;
-  protected categories = ItemCategories;
+  public categories = ItemCategories;
   public loading = false;
   public itemDetailForm;
   // public popoverTitle = 'Delete Confirmation';
@@ -66,7 +66,7 @@ export class ItemDetailModal implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {}
 
-  private formSubmit() {
+  formSubmit() {
     console.log(this.itemDetailForm.value);
 
     this.loading = true;
@@ -85,7 +85,7 @@ export class ItemDetailModal implements OnInit, AfterViewInit {
     this.modalController.dismiss();
   }
 
-  private async openConfirmDeleteItemPopover() {
+  async openConfirmDeleteItemPopover() {
     const popover = await this.popoverController.create({
       component: ConfirmDeleteItemPopover,
       componentProps: {item: this.item},
@@ -95,7 +95,7 @@ export class ItemDetailModal implements OnInit, AfterViewInit {
     return await popover.present();
   }
 
-  private closeModal() {
+  closeModal() {
     this.modalController.dismiss();
   }
 }

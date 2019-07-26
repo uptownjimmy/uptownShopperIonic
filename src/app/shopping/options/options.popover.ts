@@ -23,7 +23,7 @@ export class ShoppingItemOptionsPopover implements OnInit {
         this.loading = false;
     }
 
-    private removeItemFromShoppingList() {
+    removeItemFromShoppingList() {
         console.log('Removing item from shopping list # ' + JSON.stringify(this.item));
 
         this.loading = true;
@@ -37,7 +37,7 @@ export class ShoppingItemOptionsPopover implements OnInit {
         this.loading = false;
     }
 
-    private async showItemDetails() {
+    async showItemDetails() {
     this.popoverController.dismiss();
 
     const modal = await this.modalController.create({
@@ -52,7 +52,7 @@ export class ShoppingItemOptionsPopover implements OnInit {
     return await modal.present();
   }
 
-  private closePopover() {
+  closePopover() {
     this.popoverController.dismiss();
   }
 }

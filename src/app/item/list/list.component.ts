@@ -23,7 +23,8 @@ export class ItemListComponent implements OnInit, OnDestroy {
     this.itemService.getItems();
     this.subscription = this.itemService.itemListChanged.subscribe(
       (newItems: QueryItem[]) => {
-        this.items = newItems;
+        // chars = _.orderBy(newItems, 'name', 'asc');
+        // this.items = _.orderBy(newItems, 'name', 'asc');
       },
     );
   }
@@ -34,7 +35,7 @@ export class ItemListComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  private async openNewItem() {
+  async openNewItem() {
     const modal = await this.modalController.create({
       component: ItemDetailModal,
       componentProps: {
@@ -59,7 +60,7 @@ export class ItemListComponent implements OnInit, OnDestroy {
     return await modal.present();
   }
 
-  private async openReorderModal() {
+  async openReorderModal() {
     const modal = await this.modalController.create({
       component: ReorderModalComponent,
       componentProps: {

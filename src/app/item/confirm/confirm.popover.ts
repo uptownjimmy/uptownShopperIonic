@@ -23,7 +23,7 @@ export class ConfirmDeleteItemPopover implements OnInit {
     this.loading = false;
   }
 
-  private deleteItem() {
+  deleteItem() {
     console.log('Deleting item: ' + JSON.stringify(this.item));
 
     this.loading = true;
@@ -37,7 +37,7 @@ export class ConfirmDeleteItemPopover implements OnInit {
     this.loading = false;
   }
 
-  private closePopover() {
+  closePopover() {
     this.popoverController.dismiss();
   }
 }

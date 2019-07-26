@@ -1,36 +1,44 @@
-import {Component, Inject, Input, OnInit} from '@angular/core';
+import {Component, Inject, Input, OnDestroy, OnInit} from '@angular/core';
 import {ModalController} from '@ionic/angular';
 
-import {Item} from '../../item/item.model';
+import {QueryInfo} from 'apollo-client/core/QueryManager';
+import {QueryItem} from '../../types';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'us-add-items',
   templateUrl: './update.modal.html',
   styleUrls: ['./update.modal.css'],
 })
-export class ShoppingListUpdateModal implements OnInit {
-  @Input() items: Item[];
+export class ShoppingListUpdateModal implements OnInit, OnDestroy {
+  @Input() items: QueryItem[];
+  private subscription: Subscription;
 
   private loading = false;
-  private initialItems: Item[];
-  private updateItems: Item[] = [];
+  private initialItems: QueryItem[];
+  private updateItems: QueryItem[] = [];
 
   constructor(
     @Inject('itemService') private itemService,
     public modalController: ModalController,
   ) {
-    this.itemService.getItemsSnapshot().subscribe(
-      (response: Item[]) => {
-        this.initialItems = response;
+    this.itemService.getItemsSnapshot();
+    this.subscription = this.itemService.itemListChanged.subscribe(
+      (newItems: QueryItem[]) => {
+        this.items = newItems;
       },
     );
   }
 
   ngOnInit() {}
 
-  private onItemListClick(item: Item) {
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
+
+  onItemListClick(item: QueryItem) {
     const changedItem = this.initialItems.find((initialItem) =>
-      initialItem.id === item.id && initialItem.active !== item.active,
+      initialItem.itemId === item.itemId && initialItem.active !== item.active,
     );
 
     if (changedItem) {
@@ -38,7 +46,7 @@ export class ShoppingListUpdateModal implements OnInit {
     }
   }
 
-  private addToShoppingList() {
+  addToShoppingList() {
     this.loading = true;
     this.updateItems.forEach((item) => {
       this.itemService.updateExistingItem(item);

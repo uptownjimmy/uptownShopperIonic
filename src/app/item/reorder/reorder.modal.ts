@@ -35,13 +35,13 @@ export class ReorderModalComponent implements OnInit {
     this.subscription.unsubscribe();
   }
 
-  private reorder(event) {
+  reorder(event) {
     const itemToMove = this.items.splice(event.detail.from, 1)[0];
     this.items.splice(event.detail.to, 0, itemToMove);
     event.detail.complete();
   }
 
-  private closeModal() {
+  closeModal() {
     this.modalController.dismiss();
   }
 }

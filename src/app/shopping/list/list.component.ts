@@ -18,7 +18,7 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
   // protected itemCategories = ItemCategories;
   private items: Item[] = [];
   private shoppingItems: Item[] = [];
-  protected filteredShoppingItems: Item[] = [];
+  public filteredShoppingItems: Item[] = [];
   private stores = Store;
   private selectedStore = 'Filter by Store';
 
@@ -52,7 +52,7 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  private async addOrRemoveItems() {
+  async addOrRemoveItems() {
     const modal = await this.modalController.create({
       component: ShoppingListUpdateModal,
       componentProps: {
@@ -63,7 +63,7 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
     return await modal.present();
   }
 
-  private async openItemOptionsPopover(event, item) {
+  async openItemOptionsPopover(event, item) {
     const popover = await this.popoverController.create({
       component: ShoppingItemOptionsPopover,
       componentProps: {item},
@@ -73,7 +73,7 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
     return await popover.present();
   }
 
-  private filterByStore(storeName) {
+  filterByStore(storeName) {
     this.selectedStore = storeName;
     // this.filteredShoppingItems = this.shoppingItems.filter(item => item.store_Names.find(name => name === storeName));
   }
