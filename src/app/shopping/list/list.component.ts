@@ -1,11 +1,12 @@
 import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
-import {ModalController, PopoverController} from '@ionic/angular';
+import {ActionSheetController, ModalController, PopoverController} from '@ionic/angular';
 import {Subscription} from 'rxjs';
 
+import {ItemDetailModal} from '../../item/detail/detail.modal';
 import {Item} from '../../item/item.model';
 import {ItemCategories} from '../../item/ItemCategory.model';
+import {ReorderModalComponent} from '../../item/reorder/reorder.modal';
 import {Store} from '../../store/store.model';
-import {ShoppingItemOptionsPopover} from '../options/options.popover';
 import {ShoppingListUpdateModal} from '../update/update.modal';
 
 @Component({
@@ -18,13 +19,13 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
   // protected itemCategories = ItemCategories;
   private items: Item[] = [];
   private shoppingItems: Item[] = [];
-  public filteredShoppingItems: Item[] = [];
+  public activeShoppingItems: Item[] = [];
   private stores = Store;
   private selectedStore = 'Filter by Store';
 
   constructor(
-    public popoverController: PopoverController,
     public modalController: ModalController,
+    public actionSheetController: ActionSheetController,
     @Inject('itemService') public itemService,
     @Inject('shoppingService') public shoppingService,
     @Inject('storeService') public storeService,
@@ -36,10 +37,10 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
         this.shoppingItems = this.items.filter(
           (item) => item.active === true,
         );
-        this.filteredShoppingItems = this.shoppingItems;
-        if (this.selectedStore !== 'Filter by Store') {
-          this.filterByStore(this.selectedStore);
-        }
+        this.activeShoppingItems = this.shoppingItems;
+        // if (this.selectedStore !== 'Filter by Store') {
+        //   this.filterByStore(this.selectedStore);
+        // }
       },
     );
   }
@@ -63,18 +64,64 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
     return await modal.present();
   }
 
-  async openItemOptionsPopover(event, item) {
-    const popover = await this.popoverController.create({
-      component: ShoppingItemOptionsPopover,
-      componentProps: {item},
-      event,
+  async openItemOptions(event, item: Item) {
+    const actionSheet = await this.actionSheetController.create({
+      header: item.name,
+      buttons: [
+        {
+          text: 'Remove',
+          handler: () => {
+            if (item) {
+              item.active = false;
+              this.itemService.updateExistingItem(item);
+            }
+          },
+        },
+        {
+          text: 'Details',
+          handler: () => {
+            this.showItemDetails(item);
+          },
+        },
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => { },
+        },
+      ],
     });
 
-    return await popover.present();
+    await actionSheet.present();
+  }
+
+  async showItemDetails(item: Item) {
+    const modal = await this.modalController.create({
+      component: ItemDetailModal,
+      componentProps: {
+        isNew: false,
+        modalTitle:  'Edit Item',
+        item,
+      },
+    });
+
+    return await modal.present();
+  }
+
+  async openReorderModal() {
+    const modal = await this.modalController.create({
+      component: ReorderModalComponent,
+      componentProps: {
+        isNew: false,
+        modalTitle: 'Reorder Items',
+        // store,
+      },
+    });
+
+    return await modal.present();
   }
 
   filterByStore(storeName) {
     this.selectedStore = storeName;
-    // this.filteredShoppingItems = this.shoppingItems.filter(item => item.store_Names.find(name => name === storeName));
+    // this.activeShoppingItems = this.shoppingItems.filter(item => item.store_Names.find(name => name === storeName));
   }
 }

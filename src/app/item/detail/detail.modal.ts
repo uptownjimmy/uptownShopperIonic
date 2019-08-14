@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, Inject, Input, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {ModalController, PopoverController} from '@ionic/angular';
+import {AlertController, ModalController, PopoverController} from '@ionic/angular';
 
 // import {ShoppingItemOptionsPopover} from '../../shopping/options/options.popover';
 // import {Store} from '../../store/store.model';
@@ -35,7 +35,8 @@ export class ItemDetailModal implements OnInit, AfterViewInit {
     @Inject('itemService') private itemService,
     // private renderer: Renderer2,
     public modalController: ModalController,
-    public popoverController: PopoverController,
+    public alertController: AlertController
+
   ) {
   }
 
@@ -86,13 +87,25 @@ export class ItemDetailModal implements OnInit, AfterViewInit {
   }
 
   async openConfirmDeleteItemPopover() {
-    const popover = await this.popoverController.create({
-      component: ConfirmDeleteItemPopover,
-      componentProps: {item: this.item},
-      event,
+    const alert = await this.alertController.create({
+      header: 'Confirm Delete!',
+      message: 'Are you sure you want to delete this item from your pantry forever?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {},
+        }, {
+          text: 'Delete',
+          handler: () => {
+            this.itemService.deleteItem(this.item);
+            this.closeModal();
+          },
+        },
+      ],
     });
 
-    return await popover.present();
+    await alert.present();
   }
 
   closeModal() {

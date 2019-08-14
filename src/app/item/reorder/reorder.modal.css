@@ -1,0 +1,7 @@
+ion-button[color="medium"] {
+  margin-left: 50px;
+}
+
+ion-button[color="success"] {
+  margin-right: 50px;
+}

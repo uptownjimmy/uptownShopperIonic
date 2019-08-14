@@ -16,7 +16,7 @@
 
 .btn {
     cursor: pointer;
-    width: 100px;
+    //width: 100px;
 }
 
 span.invalid {
@@ -25,8 +25,24 @@ span.invalid {
 
 ion-label {
   //text-decoration: underline;
-  font-weight: bold;
+  //font-weight: bold;
   font-style: italic;
   color: gray !important;
+}
+
+ion-row {
+  width: 100vw;
+}
+
+//.button-inner {
+//  width: 62px !important;
+//}
+
+ion-button {
+  font-weight: bold;
+}
+
+ion-button[color="medium"] {
+  margin-right: 5vw !important;
 }
 

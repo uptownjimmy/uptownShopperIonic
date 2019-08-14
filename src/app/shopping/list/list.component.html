@@ -1,9 +1,14 @@
 <!--<ngx-loading [show]="itemService.loading"></ngx-loading>-->
 <ion-header>
     <ion-toolbar>
-        <ion-title>
-            <h3>Shopping List</h3>
-        </ion-title>
+      <ion-buttons slot="start">
+        <ion-button size="small" color="primary" fill="outline" (click)="openReorderModal()">
+          <ion-icon name="repeat"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+      <ion-title>
+          <h3>Shopping List</h3>
+      </ion-title>
     </ion-toolbar>
     <ion-toolbar>
         <ion-title>
@@ -36,8 +41,8 @@
   <ion-list>
       <ion-item
                 class="list-group-item"
-                *ngFor="let item of filteredShoppingItems"
-                (click)="openItemOptionsPopover($event, item)">
+                *ngFor="let item of activeShoppingItems"
+                (click)="openItemOptions($event, item)">
           <ion-label>{{ item.name }}</ion-label>
           <ion-icon name="arrow-forward"></ion-icon>
       </ion-item>

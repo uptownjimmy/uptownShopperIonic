@@ -1,11 +1,11 @@
 import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
 import {ModalController} from '@ionic/angular';
-
 import {Subscription} from 'rxjs';
+
+import {QueryItem} from '../../types';
 import {ItemDetailModal} from '../detail/detail.modal';
 import {Item} from '../item.model';
 import {ReorderModalComponent} from '../reorder/reorder.modal';
-import {QueryItem} from '../../types';
 
 @Component({
   selector: 'us-item-list',
@@ -17,12 +17,13 @@ export class ItemListComponent implements OnInit, OnDestroy {
   private subscription: Subscription;
 
   constructor(
-    @Inject('itemService') public itemService,
     public modalController: ModalController,
+    @Inject('itemService') public itemService,
   ) {
     this.itemService.getItems();
     this.subscription = this.itemService.itemListChanged.subscribe(
-      (newItems: QueryItem[]) => {
+      (queryItems: QueryItem[]) => {
+        this.items = queryItems;
         // chars = _.orderBy(newItems, 'name', 'asc');
         // this.items = _.orderBy(newItems, 'name', 'asc');
       },
@@ -60,16 +61,16 @@ export class ItemListComponent implements OnInit, OnDestroy {
     return await modal.present();
   }
 
-  async openReorderModal() {
-    const modal = await this.modalController.create({
-      component: ReorderModalComponent,
-      componentProps: {
-        isNew: false,
-        modalTitle: 'Reorder Items',
-        // store,
-      },
-    });
-
-    return await modal.present();
-  }
+  // async openReorderModal() {
+  //   const modal = await this.modalController.create({
+  //     component: ReorderModalComponent,
+  //     componentProps: {
+  //       isNew: false,
+  //       modalTitle: 'Reorder Items',
+  //       // store,
+  //     },
+  //   });
+  //
+  //   return await modal.present();
+  // }
 }

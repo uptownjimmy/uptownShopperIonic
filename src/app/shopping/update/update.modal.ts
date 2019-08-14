@@ -1,9 +1,9 @@
 import {Component, Inject, Input, OnDestroy, OnInit} from '@angular/core';
 import {ModalController} from '@ionic/angular';
 
-import {QueryInfo} from 'apollo-client/core/QueryManager';
-import {QueryItem} from '../../types';
+// import {QueryInfo} from 'apollo-client/core/QueryManager';
 import {Subscription} from 'rxjs';
+import {QueryItem} from '../../types';
 
 @Component({
   selector: 'us-add-items',
@@ -15,14 +15,13 @@ export class ShoppingListUpdateModal implements OnInit, OnDestroy {
   private subscription: Subscription;
 
   private loading = false;
-  private initialItems: QueryItem[];
+  private initialItems: QueryItem[] = [];
   private updateItems: QueryItem[] = [];
 
   constructor(
     @Inject('itemService') private itemService,
     public modalController: ModalController,
   ) {
-    this.itemService.getItemsSnapshot();
     this.subscription = this.itemService.itemListChanged.subscribe(
       (newItems: QueryItem[]) => {
         this.items = newItems;
@@ -30,7 +29,9 @@ export class ShoppingListUpdateModal implements OnInit, OnDestroy {
     );
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.initialItems = JSON.parse(JSON.stringify(this.items));
+  }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();

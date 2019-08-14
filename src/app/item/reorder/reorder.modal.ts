@@ -38,7 +38,12 @@ export class ReorderModalComponent implements OnInit {
   reorder(event) {
     const itemToMove = this.items.splice(event.detail.from, 1)[0];
     this.items.splice(event.detail.to, 0, itemToMove);
-    event.detail.complete();
+    const titems = event.detail.complete(this.items);
+    console.log(titems);
+  }
+
+  saveReorder() {
+
   }
 
   closeModal() {

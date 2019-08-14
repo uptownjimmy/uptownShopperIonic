@@ -3,8 +3,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
-import { ApolloModule, Apollo } from 'apollo-angular';
-import { HttpLinkModule, HttpLink } from 'apollo-angular-link-http';
+import { Apollo, ApolloModule } from 'apollo-angular';
+import { HttpLink, HttpLinkModule } from 'apollo-angular-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
@@ -27,7 +27,7 @@ import { StoreService } from './services/store.service';
     AppRoutingModule,
     HttpClientModule,
     ApolloModule,
-    HttpLinkModule
+    HttpLinkModule,
   ],
   providers: [
   StatusBar,
@@ -43,11 +43,11 @@ import { StoreService } from './services/store.service';
 export class AppModule {
   constructor(
     apollo: Apollo,
-    httpLink: HttpLink
+    httpLink: HttpLink,
   ) {
     apollo.create({
       link: httpLink.create({ uri: 'https://localhost:5001/api/graphql' }),
-      cache: new InMemoryCache()
+      cache: new InMemoryCache(),
     });
   }
 }

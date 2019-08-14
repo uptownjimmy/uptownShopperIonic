@@ -7,14 +7,14 @@
 <ion-content>
   <form [formGroup]="itemDetailForm">
     <ion-item>
-      <ion-label position="floating">Name</ion-label>
+      <ion-label position="stacked">Name</ion-label>
       <ion-input id="name" formControlName="name"></ion-input>
       <span class="invalid" *ngIf="!itemDetailForm.get('name').valid && itemDetailForm.get('name').touched">
           Please enter a name.
       </span>
     </ion-item>
     <ion-item>
-      <ion-label position="floating">Category</ion-label>
+      <ion-label position="stacked">Category</ion-label>
       <ion-select id="category" formControlName="category" placeholder="Select One">
         <ion-select-option *ngFor="let category of categories" [value]="category.name">
           {{category.name}}
@@ -25,7 +25,7 @@
       </span>
     </ion-item>
     <ion-item>
-      <ion-label position="floating">Notes</ion-label>
+      <ion-label position="stacked">Notes</ion-label>
       <ion-textarea id="notes" formControlName="notes" rows="4"></ion-textarea>
     </ion-item>
   </form>
@@ -47,30 +47,39 @@
 </ion-content>
 <ion-footer>
   <ion-toolbar>
-    <ion-title>
-      <ion-button
-        color="success"
-        fill="outline"
-        size="small"
-        (click)="formSubmit()"
-        [disabled]="!itemDetailForm.valid || itemDetailForm.pristine">
-        Save
-      </ion-button>
-      <ion-button
-        color="danger"
-        fill="outline"
-        size="small"
-        (click)="openConfirmDeleteItemPopover()"
-        *ngIf="!isNew">
-        Delete
-      </ion-button>
-      <ion-button
-        color="medium"
-        fill="outline"
-        size="small"
-        (click)="closeModal()">
-        Close
-      </ion-button>
-    </ion-title>
+    <ion-buttons>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="4">
+            <ion-button
+              color="danger"
+              fill="outline"
+              (click)="openConfirmDeleteItemPopover()"
+              *ngIf="!isNew">
+              Delete
+            </ion-button>
+          </ion-col>
+          <ion-col size="4" text-center>
+            <ion-button
+              style="width: 62px !important;"
+              color="success"
+              fill="outline"
+              (click)="formSubmit()"
+              [disabled]="!itemDetailForm.valid || itemDetailForm.pristine">
+              Save
+            </ion-button>
+          </ion-col>
+          <ion-col size="4" text-right>
+            <ion-button
+              color="medium"
+              fill="outline"
+              (click)="closeModal()">
+              Close
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-buttons>
+
   </ion-toolbar>
 </ion-footer>

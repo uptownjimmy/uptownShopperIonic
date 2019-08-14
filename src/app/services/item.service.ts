@@ -87,33 +87,33 @@ export class ItemService {
         // this.loading = result.loading;
         const errors = result.errors;
         if (!errors) {
-          console.dir('ItemService.getItems(): item list retrieved: ' + this.items);
+          console.log(this.items);
           this.itemListChanged.next(this.items.slice());
         } else {
-          console.dir('Error occurred in ItemService.getItems(): ', errors.entries());
+          console.log('Error occurred in ItemService.getItems(): ', errors.entries());
         }
 
         this.loading = false;
       });
   }
 
-  getItemsSnapshot() {
-    this.apollo.watchQuery<any>({
-      query: this.getItemsSnapshotQuery,
-    }).valueChanges
-      .subscribe((result) => {
-      // this.loading = result.loading;
-      const errors = result.errors;
-      if (!errors) {
-        console.dir('ItemService.getItemsSnapshot() item snapshot retrieved: ' + this.items);
-        this.itemSnapshotChanged.next(result.data.items.slice());
-      } else {
-        console.dir('Error occurred in ItemService.getItemsSnapshot(): ', errors.entries());
-      }
-
-      this.loading = false;
-    });
-  }
+  // getItemsSnapshot() {
+  //   this.apollo.watchQuery<any>({
+  //     query: this.getItemsSnapshotQuery,
+  //   }).valueChanges
+  //     .subscribe((result) => {
+  //     // this.loading = result.loading;
+  //     const errors = result.errors;
+  //     if (!errors) {
+  //       console.log('ItemService.getItemsSnapshot() item snapshot retrieved: ' + this.items);
+  //       this.itemSnapshotChanged.next(result.data.items.slice());
+  //     } else {
+  //       console.log('Error occurred in ItemService.getItemsSnapshot(): ', errors.entries());
+  //     }
+  //
+  //     this.loading = false;
+  //   });
+  // }
 
   createNewItem(formValues: QueryItem) {
     if (!this.items.find((i) => i.name === formValues.name)) {
@@ -132,9 +132,9 @@ export class ItemService {
         }],
       }).subscribe(
         ({data}) => {
-          console.dir('ItemService.createNewItem() successful');
+          console.log('ItemService.createNewItem() successful');
         }, (error) => {
-          console.dir('There was an error creating the new item: ', error);
+          console.log('There was an error creating the new item: ', error);
         },
       );
     } else {
@@ -153,7 +153,7 @@ export class ItemService {
         itemId: item.itemId,
         name: item.name,
         category: item.category,
-        active: true,
+        active: item.active,
         notes: item.notes ? item.notes : '',
       },
       refetchQueries: [{
@@ -161,10 +161,11 @@ export class ItemService {
       }],
     }).subscribe(
       ({data}) => {
-        console.dir('ItemService.updateExistingItem() successful');
+        console.log('ItemService.updateExistingItem() successful');
+        console.log(data);
         this.loading = false;
       }, (error) => {
-        console.dir('There was an error updating the item: ', error);
+        console.log('There was an error updating the item: ', error);
       },
     );
 
@@ -188,10 +189,10 @@ export class ItemService {
       }],
     }).subscribe(
       ({data}) => {
-        console.dir('ItemService.deleteItem() successful');
+        console.log('ItemService.deleteItem() successful');
         this.loading = false;
       }, (error) => {
-        console.dir('There was an error deleting the item: ', error);
+        console.log('There was an error deleting the item: ', error);
       },
     );
 
